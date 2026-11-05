@@ -1,0 +1,9 @@
+{
+  "sources_autorisees": ["poppt1"],
+  "mots_cles_globaux": ["bowser"],
+  "max_par_source": 15,
+  "delai_ms_entre_requetes": 2000,
+  "age_max_jours": 365,
+  "frequence_recommandee": "1 fois par semaine (voir spec/07-veille.md pour cron / Planificateur de tâches)",
+  "user_agent": "PreMatch-veille/1.0 (usage personnel)"
+}

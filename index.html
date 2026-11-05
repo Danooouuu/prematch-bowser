@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PréMatch Bowser</title>
+  <meta name="description" content="Fiches pré-match pour jouer Bowser dans Super Smash Bros. Ultimate : win conditions adverses, combos, contre-mesures, drills.">
+  <meta name="theme-color" content="#0d0f12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PréMatch">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="app" aria-live="polite"><p class="boot">PréMatch…</p></div>
+  <noscript>PréMatch a besoin de JavaScript.</noscript>
+  <!-- Ordre : données → i18n → stockage → schémas → app. Tout est local, aucun CDN : démarrage instantané et hors-ligne. -->
+  <script src="data/bundle.js"></script>
+  <script src="i18n.js"></script>
+  <script src="store.js"></script>
+  <script src="schemas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

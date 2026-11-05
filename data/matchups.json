@@ -1,0 +1,944 @@
+{
+  "version": "2026.11.05",
+  "perso_joue": "Bowser",
+  "methode": "Ordre du plus difficile (10) au plus simple (1) pour Bowser. Base : tableau de matchups Bowser de Game8 (échelle -2 à +2, catégories non ordonnées en interne), affiné par jugement (vitesse, taille de la cible, capacité à combo un poids lourd, zoning, difficulté d'edgeguard). Les personnages absents du tableau Game8 sont marqués 'estimation'. Toute cote est un point de départ : à ajuster selon tes propres résultats.",
+  "sources_cotes": [
+    {
+      "id": "game8",
+      "titre": "Game8 — Bowser Guide: Matchup Chart and Combos",
+      "url": "https://game8.co/games/SSBU/archives/281188"
+    },
+    {
+      "id": "dashfight",
+      "titre": "DashFight — Smash Ultimate: Bowser Counters (avis divergents sur plusieurs MU)",
+      "url": "https://dashfight.com/news/smash-ultimate-bowser-counters-matchup-chart-237"
+    }
+  ],
+  "matchups": [
+    {
+      "id": "pikachu",
+      "nom": "Pikachu",
+      "alias": [
+        "pika"
+      ],
+      "difficulte": 10,
+      "cote": "-2",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Minuscule, très rapide, combote une grosse hitbox à volonté et edgeguarde fort ; très dur à toucher pour les coups lents de Bowser."
+    },
+    {
+      "id": "peach",
+      "nom": "Peach / Daisy",
+      "alias": [
+        "daisy",
+        "peach"
+      ],
+      "difficulte": 9,
+      "cote": "-2",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Float cancel + navets : pression aérienne sûre et combos très longs sur un perso lourd et grand."
+    },
+    {
+      "id": "sonic",
+      "nom": "Sonic",
+      "alias": [],
+      "difficulte": 8,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Vitesse extrême, choisit quand engager ; Bowser peine à le punir et à le coincer. (DashFight le classe pourtant favorable : MU débattu.)"
+    },
+    {
+      "id": "zss",
+      "nom": "Zero Suit Samus",
+      "alias": [
+        "zss",
+        "zero suit"
+      ],
+      "difficulte": 8,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Mobilité, kill confirms (flip), combos sur grosse cible ; punit chaque raté de Bowser."
+    },
+    {
+      "id": "joker",
+      "nom": "Joker",
+      "alias": [],
+      "difficulte": 8,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Pistolet + Arsène : zoning et combos amplifiés. Les données DashFight sont pourtant favorables à Bowser : MU débattu."
+    },
+    {
+      "id": "pyra-mythra",
+      "nom": "Pyra / Mythra",
+      "alias": [
+        "pyra",
+        "mythra",
+        "aegis"
+      ],
+      "difficulte": 8,
+      "cote": "?",
+      "source_cote": "estimation",
+      "fiche": false,
+      "justification": "Mythra : vitesse et combos ; Pyra : portée et kills. Couvre les deux faiblesses de Bowser."
+    },
+    {
+      "id": "minmin",
+      "nom": "Min Min",
+      "alias": [
+        "min min"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée énorme, contrôle de l'espace ; Bowser doit traverser tout l'écran."
+    },
+    {
+      "id": "gnw",
+      "nom": "Mr. Game & Watch",
+      "alias": [
+        "gnw",
+        "g&w",
+        "game and watch",
+        "game & watch"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Petit, aérien fort, seau qui absorbe le souffle de feu, up-B OoS très rapide."
+    },
+    {
+      "id": "rob",
+      "nom": "R.O.B.",
+      "alias": [
+        "rob"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Gyro + laser : zoning solide ; récupération longue difficile à edgeguarder."
+    },
+    {
+      "id": "wario",
+      "nom": "Wario",
+      "alias": [],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Mobilité aérienne, hitbox basse, waft qui tue tôt ; dur à attraper."
+    },
+    {
+      "id": "diddy",
+      "nom": "Diddy Kong",
+      "alias": [
+        "diddy"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Banane + combos sur poids lourd ; contrôle du sol."
+    },
+    {
+      "id": "falco",
+      "nom": "Falco",
+      "alias": [],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Lasers, combos up-air, edgeguard efficace sur la récupération de Bowser."
+    },
+    {
+      "id": "falcon",
+      "nom": "Captain Falcon",
+      "alias": [
+        "falcon",
+        "cf"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Vitesse et combos ravageurs sur les lourds."
+    },
+    {
+      "id": "palutena",
+      "nom": "Palutena",
+      "alias": [
+        "palu"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Nair/up-air combos, mobilité, pression bouclier sûre."
+    },
+    {
+      "id": "greninja",
+      "nom": "Greninja",
+      "alias": [
+        "gren"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Shurikens, vitesse, punitions rapides."
+    },
+    {
+      "id": "samus",
+      "nom": "Samus / Dark Samus",
+      "alias": [
+        "samus",
+        "dark samus"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Zoning (missiles, charge shot), récupération longue."
+    },
+    {
+      "id": "duckhunt",
+      "nom": "Duck Hunt",
+      "alias": [
+        "dh"
+      ],
+      "difficulte": 7,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Canette, frisbee, gunmen : zoning lourd pour un grand perso."
+    },
+    {
+      "id": "sora",
+      "nom": "Sora",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "?",
+      "source_cote": "estimation",
+      "fiche": false,
+      "justification": "Combos aériens et récupération très longue ; léger donc Bowser le tue tôt s'il touche."
+    },
+    {
+      "id": "megaman",
+      "nom": "Mega Man",
+      "alias": [
+        "megaman"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Pellets et metal blade : zoning permanent."
+    },
+    {
+      "id": "toonlink",
+      "nom": "Toon Link",
+      "alias": [
+        "tink"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Projectiles + combos bombe."
+    },
+    {
+      "id": "younglink",
+      "nom": "Young Link",
+      "alias": [
+        "yink"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Projectiles + combos nair."
+    },
+    {
+      "id": "link",
+      "nom": "Link",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Bombe, flèche, boomerang : zoning et setups."
+    },
+    {
+      "id": "mario",
+      "nom": "Mario",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Up-tilt/up-air combos sur grosse cible, cape qui renvoie le souffle."
+    },
+    {
+      "id": "luigi",
+      "nom": "Luigi",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Grab combos et zair ; mais récupération exploitable."
+    },
+    {
+      "id": "lucina",
+      "nom": "Lucina",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée d'épée constante, espacement sûr."
+    },
+    {
+      "id": "ness",
+      "nom": "Ness",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Bair kill, PK fire ; récupération punissable par Bowser."
+    },
+    {
+      "id": "shulk",
+      "nom": "Shulk",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée et Monado (vitesse/saut) ; espace bien Bowser."
+    },
+    {
+      "id": "robin",
+      "nom": "Robin",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Zoning (thoron, arcfire) ; Bowser doit approcher."
+    },
+    {
+      "id": "bowserjr",
+      "nom": "Bowser Jr.",
+      "alias": [
+        "jr",
+        "bjr"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Mechakoopa + kart ; zone et combote."
+    },
+    {
+      "id": "miigunner",
+      "nom": "Mii Tireur",
+      "alias": [
+        "mii gunner"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Zoning selon le set."
+    },
+    {
+      "id": "plant",
+      "nom": "Plante Piranha",
+      "alias": [
+        "piranha plant",
+        "plante"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Ptooie + poison : couvre l'espace."
+    },
+    {
+      "id": "pt",
+      "nom": "Dresseur de Pokémon",
+      "alias": [
+        "pokemon trainer",
+        "pt",
+        "dracaufeu",
+        "herbizarre",
+        "carapuce"
+      ],
+      "difficulte": 6,
+      "cote": "-1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Carapuce combote, Herbizarre zone ; Dracaufeu est en revanche jouable pour Bowser."
+    },
+    {
+      "id": "steve",
+      "nom": "Steve / Alex",
+      "alias": [
+        "steve",
+        "alex",
+        "minecraft"
+      ],
+      "difficulte": 6,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Blocs, chariot, combos de ressources ; difficile à edgeguarder, bloque la récupération."
+    },
+    {
+      "id": "pichu",
+      "nom": "Pichu",
+      "alias": [],
+      "difficulte": 6,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Petit et rapide comme Pikachu, mais meurt très tôt."
+    },
+    {
+      "id": "kazuya",
+      "nom": "Kazuya",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "?",
+      "source_cote": "estimation",
+      "fiche": false,
+      "justification": "Punitions énormes, mais lent lui aussi ; MU de lecture."
+    },
+    {
+      "id": "sephiroth",
+      "nom": "Sephiroth",
+      "alias": [
+        "seph"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée immense, mais léger : Bowser le tue tôt."
+    },
+    {
+      "id": "snake",
+      "nom": "Snake",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Grenades et C4 : contrôle de l'espace ; lourd lui aussi."
+    },
+    {
+      "id": "pacman",
+      "nom": "Pac-Man",
+      "alias": [
+        "pac"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Fruits, borne : zoning et pièges."
+    },
+    {
+      "id": "olimar",
+      "nom": "Olimar",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Pikmin à longue portée ; mais récupération faible."
+    },
+    {
+      "id": "villager",
+      "nom": "Villageois / Marie",
+      "alias": [
+        "villager",
+        "isabelle",
+        "marie"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Projectiles et poche (qui peut capter le souffle de feu)."
+    },
+    {
+      "id": "iceclimbers",
+      "nom": "Ice Climbers",
+      "alias": [
+        "ic",
+        "ics"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Grabs dangereux ; séparer Nana donne l'avantage."
+    },
+    {
+      "id": "metaknight",
+      "nom": "Meta Knight",
+      "alias": [
+        "mk"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Vitesse et combos, mais léger et portée courte."
+    },
+    {
+      "id": "sheik",
+      "nom": "Sheik",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Vitesse, aiguilles, mais tue difficilement un lourd."
+    },
+    {
+      "id": "wolf",
+      "nom": "Wolf",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Laser qui fait flinch, bair ; récupération punissable."
+    },
+    {
+      "id": "inkling",
+      "nom": "Inkling",
+      "alias": [
+        "ink"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Encre (dégâts accrus), roller ; léger."
+    },
+    {
+      "id": "roy",
+      "nom": "Roy / Chrom",
+      "alias": [
+        "roy",
+        "chrom"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Combos rapides sur lourd ; récupération très exploitable par Bowser."
+    },
+    {
+      "id": "marth",
+      "nom": "Marth",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Tipper kill tôt ; récupération edgeguardable."
+    },
+    {
+      "id": "lucas",
+      "nom": "Lucas",
+      "alias": [],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Zair, PK freeze ; récupération exploitable."
+    },
+    {
+      "id": "simon",
+      "nom": "Simon / Richter",
+      "alias": [
+        "simon",
+        "richter"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Zoning (hache, croix, eau) ; récupération médiocre."
+    },
+    {
+      "id": "rosalina",
+      "nom": "Harmonie & Luma",
+      "alias": [
+        "rosalina",
+        "rosa",
+        "harmonie"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Luma couvre l'espace ; Harmonie meurt tôt sans Luma."
+    },
+    {
+      "id": "bayonetta",
+      "nom": "Bayonetta",
+      "alias": [
+        "bayo"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Combos aériens longs, mais légère."
+    },
+    {
+      "id": "banjo",
+      "nom": "Banjo & Kazooie",
+      "alias": [
+        "banjo"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Œufs, grenade, armure sur side-B."
+    },
+    {
+      "id": "wiifit",
+      "nom": "Entraîneuse Wii Fit",
+      "alias": [
+        "wii fit",
+        "wft"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Soleil et ballon : zoning."
+    },
+    {
+      "id": "bowser",
+      "nom": "Bowser (miroir)",
+      "alias": [
+        "ditto",
+        "miroir"
+      ],
+      "difficulte": 5,
+      "cote": "0",
+      "source_cote": "estimation",
+      "fiche": false,
+      "justification": "Miroir : celui qui contrôle le rebord et punit le mieux gagne."
+    },
+    {
+      "id": "yoshi",
+      "nom": "Yoshi",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Armure double saut, œufs ; mais Bowser le tue tôt."
+    },
+    {
+      "id": "zelda",
+      "nom": "Zelda",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Fantôme + Din ; lente au sol."
+    },
+    {
+      "id": "ike",
+      "nom": "Ike",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée et puissance ; récupération très punissable."
+    },
+    {
+      "id": "byleth",
+      "nom": "Byleth",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée longue, mais lent et récupération faible."
+    },
+    {
+      "id": "ken",
+      "nom": "Ken",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Combos et shoryu, mais récupération courte."
+    },
+    {
+      "id": "terry",
+      "nom": "Terry",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "GO! moves dangereux à haut %, récupération moyenne."
+    },
+    {
+      "id": "jigglypuff",
+      "nom": "Rondoudou",
+      "alias": [
+        "jigglypuff",
+        "puff",
+        "rondoudou"
+      ],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Aérienne, mais meurt extrêmement tôt contre Bowser."
+    },
+    {
+      "id": "krool",
+      "nom": "King K. Rool",
+      "alias": [
+        "krool",
+        "k rool"
+      ],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Duel de poids lourds ; couronne et armure à respecter."
+    },
+    {
+      "id": "dedede",
+      "nom": "King Dedede",
+      "alias": [
+        "dedede",
+        "d3"
+      ],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Gordo et portée ; lourd et lent lui aussi."
+    },
+    {
+      "id": "ridley",
+      "nom": "Ridley",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Grand comme Bowser : ses combos marchent moins bien."
+    },
+    {
+      "id": "miibrawler",
+      "nom": "Mii Boxeur",
+      "alias": [
+        "mii brawler"
+      ],
+      "difficulte": 4,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Dépend du set ; portée courte."
+    },
+    {
+      "id": "cloud",
+      "nom": "Cloud",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Combos aériens et Limite dangereux, mais récupération faible sans Limite : Bowser l'edgeguarde."
+    },
+    {
+      "id": "fox",
+      "nom": "Fox",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Rapide, mais léger et fast-faller : meurt tôt et se fait combo ; lasers sans flinch."
+    },
+    {
+      "id": "lucario",
+      "nom": "Lucario",
+      "alias": [],
+      "difficulte": 4,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Aura dangereuse à haut %, mais Bowser tue avant."
+    },
+    {
+      "id": "kirby",
+      "nom": "Kirby",
+      "alias": [],
+      "difficulte": 3,
+      "cote": "0",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée courte, léger ; Bowser le domine au contact."
+    },
+    {
+      "id": "mewtwo",
+      "nom": "Mewtwo",
+      "alias": [],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Grand et léger : cible idéale pour Bowser."
+    },
+    {
+      "id": "pit",
+      "nom": "Pit / Pit maléfique",
+      "alias": [
+        "pit",
+        "dark pit"
+      ],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Polyvalent mais peu de kill power sur un lourd."
+    },
+    {
+      "id": "corrin",
+      "nom": "Corrin",
+      "alias": [],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Portée mais lent ; punissable."
+    },
+    {
+      "id": "dk",
+      "nom": "Donkey Kong",
+      "alias": [
+        "dk"
+      ],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Cargo throw dangereux, mais grande cible et récupération horizontale."
+    },
+    {
+      "id": "drmario",
+      "nom": "Dr. Mario",
+      "alias": [
+        "doc"
+      ],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Fort au contact, mais lent et récupération courte."
+    },
+    {
+      "id": "hero",
+      "nom": "Héros",
+      "alias": [
+        "hero"
+      ],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Aléatoire (menu), mais lent et récupération médiocre."
+    },
+    {
+      "id": "miisword",
+      "nom": "Mii Épéiste",
+      "alias": [
+        "mii swordfighter"
+      ],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Peu de vitesse ; Bowser domine le sol."
+    },
+    {
+      "id": "ryu",
+      "nom": "Ryu",
+      "alias": [],
+      "difficulte": 3,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Shoryu dangereux, mais récupération très courte."
+    },
+    {
+      "id": "ganondorf",
+      "nom": "Ganondorf",
+      "alias": [
+        "ganon"
+      ],
+      "difficulte": 2,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Encore plus lent que Bowser, récupération faible."
+    },
+    {
+      "id": "littlemac",
+      "nom": "Little Mac",
+      "alias": [
+        "mac"
+      ],
+      "difficulte": 2,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": false,
+      "justification": "Récupération catastrophique : un passage offstage = une stock."
+    },
+    {
+      "id": "incineroar",
+      "nom": "Félinferno",
+      "alias": [
+        "incineroar",
+        "incin",
+        "felinferno"
+      ],
+      "difficulte": 2,
+      "cote": "+1",
+      "source_cote": "game8",
+      "fiche": true,
+      "justification": "Lent, grande cible, récupération faible ; attention seulement à la Vengeance et aux grabs."
+    }
+  ]
+}

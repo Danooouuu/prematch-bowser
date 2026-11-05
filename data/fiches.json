@@ -1,0 +1,1668 @@
+{
+  "version": "2026.11.05",
+  "avertissement": "Les pourcentages sont indicatifs (Bowser = très lourd, la rage et la DI déplacent fortement les fenêtres). Valide chaque combo en mode Entraînement. Les GIFs sont les visualisations de hitbox de SmashWiki (images du jeu © Nintendo), affichés par lien depuis leur hébergeur, jamais copiés dans l'app. Les vidéos Poppt1 viennent de la playlist School of Smash Fundamentals ; aucun timestamp n'a été inventé.",
+  "fiches": [
+    {
+      "id": "pikachu",
+      "nom": "Pikachu",
+      "difficulte": 10,
+      "conseil_rapide": "Reste au sol et bouclier haut : punis chaque aérien sur bouclier par up-B hors bouclier. Ne saute pas après lui, ne reviens jamais bas.",
+      "win_conditions": [
+        "Racking à bas % : up-tilts et aériens enchaînés sur ta grosse hitbox jusqu'à ~60–80 %.",
+        "Edgeguard : Thunder Jolt sur le rebord + bair / fair hors scène contre ton up-B prévisible.",
+        "Kill confirms : up-throw → Thunder ou up-smash en fin de jongle, sans jamais s'exposer.",
+        "Neutre de harcèlement : Thunder Jolt + Quick Attack pour choisir quand engager."
+      ],
+      "setups": [
+        {
+          "titre": "Thunder en bord de plateforme / de scène",
+          "reconnaitre": "Pikachu te projette en hauteur près du bord, puis reste sous toi.",
+          "reponse": "Esquive aérienne en dérivant vers le côté (jamais en ligne droite), ou Bowser Bomb (down-B) pour quitter la colonne de foudre."
+        },
+        {
+          "titre": "Jolt au rebord",
+          "reconnaitre": "Pikachu lance un Thunder Jolt qui longe le bord pendant ta récupération.",
+          "reponse": "Reviens haut et varie : saut depuis le rebord, roulade, ou attente sur le rebord pour laisser passer le projectile."
+        }
+      ],
+      "combos": [
+        {
+          "id": "pika-utilt-chain",
+          "titre": "Chaîne d'up-tilts → up-air",
+          "inputs": [
+            "up-tilt",
+            "up-tilt",
+            "up-tilt",
+            "saut",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "0–40 % (indicatif)",
+            "position": "Milieu de scène, Bowser au-dessus de Pikachu",
+            "di": "DI neutre ou vers l'intérieur prolonge la chaîne"
+          },
+          "but": "racking",
+          "variantes": [
+            "Finit en up-smash si Bowser tombe tard",
+            "Avec DI vers l'extérieur : finit en fair pour pousser vers le bord"
+          ],
+          "contre_mesures": [
+            "DI vers l'extérieur dès le 1er up-tilt pour sortir de la chaîne",
+            "Esquive aérienne tardive (pas réflexe) après le 2e hit",
+            "Si tu sors au-dessus : Bowser Bomb (down-B) pour tomber vite avec hitbox"
+          ],
+          "medias": [
+            "gif-pika-utilt",
+            "poppt-zack",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": [
+            {
+              "titre": "Connaissance générale du matchup — à confirmer en entraînement",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "id": "pika-utilt-usmash",
+          "titre": "Up-tilt → up-smash",
+          "inputs": [
+            "up-tilt",
+            "dash court",
+            "up-smash"
+          ],
+          "conditions": {
+            "pourcent": "40–80 % (racking) ; kill seulement à % élevé sur plateforme (indicatif)",
+            "position": "Sous Bowser ou sous une plateforme",
+            "di": "DI neutre"
+          },
+          "but": "racking",
+          "variantes": [
+            "Sur plateforme haute : peut tuer bien plus tôt",
+            "Remplacé par up-air si Bowser dérive trop loin"
+          ],
+          "contre_mesures": [
+            "Crouch (s'accroupir) au sol réduit le recul des petits coups (crouch cancel) : tu restes au sol pour bouclier ou punir",
+            "Après l'up-tilt, DI en dehors + esquive tardive",
+            "S'il dash sous toi : atterris avec fair espacé, pas avec nair"
+          ],
+          "medias": [
+            "gif-pika-utilt",
+            "gif-pika-usmash",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": [
+            {
+              "titre": "Exemple de la demande initiale (adapté : pas un kill confirm à 40–80 % sur un poids lourd)",
+              "url": ""
+            }
+          ]
+        },
+        {
+          "id": "pika-uthrow-thunder",
+          "titre": "Up-throw → Thunder",
+          "inputs": [
+            "grab",
+            "up-throw",
+            "down-B (Thunder)"
+          ],
+          "conditions": {
+            "pourcent": "Haut % sur Bowser (indicatif 120 %+)",
+            "position": "Partout ; tue plus tôt sous une plateforme haute",
+            "di": "La DI latérale peut faire rater l'éclair"
+          },
+          "but": "kill",
+          "variantes": [
+            "Thunder en lecture d'esquive si tu esquives tôt",
+            "Sur plateforme : l'éclair touche plus tôt"
+          ],
+          "contre_mesures": [
+            "Ne te fais pas grab : pas de bouclier immobile prolongé à haut %",
+            "DI vers le côté pendant le lancer",
+            "Si raté : Thunder est très punissable — atterris et punis par grab / side-B"
+          ],
+          "medias": [
+            "gif-pika-uthrow",
+            "gif-pika-thunder",
+            "schema-kill-confirm"
+          ],
+          "ref_poppt": null,
+          "sources": [
+            {
+              "titre": "SmashWiki — Pikachu (SSBU)",
+              "url": "https://www.ssbwiki.com/Pikachu_(SSBU)"
+            }
+          ]
+        },
+        {
+          "id": "pika-edgeguard",
+          "titre": "Edgeguard Jolt → bair",
+          "inputs": [
+            "neutral-B (Thunder Jolt) au rebord",
+            "saut offstage",
+            "bair / fair"
+          ],
+          "conditions": {
+            "pourcent": "Dès ~70 % (indicatif)",
+            "position": "Bowser hors scène, revient avec up-B",
+            "di": "—"
+          },
+          "but": "kill",
+          "variantes": [
+            "Down-air météore au-dessus de toi",
+            "Reste au rebord et punit ta remontée"
+          ],
+          "contre_mesures": [
+            "Remonte haut avec ton double saut AVANT d'utiliser up-B",
+            "Garde ton double saut : feinte vers le rebord puis remonte",
+            "Up-B a une hitbox : utilise-le quand Pikachu est collé à toi, pas à distance"
+          ],
+          "medias": [
+            "gif-pika-jolt",
+            "gif-pika-bair",
+            "poppt-ledgeesc",
+            "schema-edgeguard"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=jMGl4V3gG2c",
+            "titre": "The Mind of Samsora and Tweek: Escaping Ledgetraps",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": []
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-pika-utilt",
+          "type": "gif",
+          "titre": "Up-tilt de Pikachu (démarreur de jongle)",
+          "url": "https://ssb.wiki.gallery/images/thumb/a/a1/PikachuUTiltSSBU.gif/500px-PikachuUTiltSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-pika-usmash",
+          "type": "gif",
+          "titre": "Up-smash de Pikachu",
+          "url": "https://ssb.wiki.gallery/images/thumb/a/aa/PikachuUSmashSSBU.gif/500px-PikachuUSmashSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-pika-uthrow",
+          "type": "gif",
+          "titre": "Up-throw de Pikachu (avant Thunder)",
+          "url": "https://ssb.wiki.gallery/images/thumb/2/21/PikachuUThrowSSBU.gif/500px-PikachuUThrowSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-pika-thunder",
+          "type": "gif",
+          "titre": "Thunder (down-B) — l'éclair qui tue",
+          "url": "https://ssb.wiki.gallery/images/thumb/d/d9/PikachuDSpecialHitSSBU.gif/500px-PikachuDSpecialHitSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-pika-jolt",
+          "type": "gif",
+          "titre": "Thunder Jolt aérien (edgeguard / zoning)",
+          "url": "https://ssb.wiki.gallery/images/thumb/b/b6/PikachuNSpecialAerialSSBU.gif/500px-PikachuNSpecialAerialSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-pika-bair",
+          "type": "gif",
+          "titre": "Bair de Pikachu (edgeguard)",
+          "url": "https://ssb.wiki.gallery/images/thumb/b/be/PikachuBAirSSBU.gif/500px-PikachuBAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Pikachu_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-oos",
+          "type": "gif",
+          "titre": "Ta réponse : Whirling Fortress (up-B) hors bouclier",
+          "url": "https://ssb.wiki.gallery/images/thumb/8/89/BowserWhirlingFortressGroundedSSBU.gif/500px-BowserWhirlingFortressGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-zack",
+          "type": "youtube",
+          "video_id": "crcmNx_Lxu4",
+          "start": 0,
+          "titre": "Poppt — The Mind of Zackray: Landing from Disadvantage",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-ledgeesc",
+          "type": "youtube",
+          "video_id": "jMGl4V3gG2c",
+          "start": 0,
+          "titre": "Poppt — The Mind of Samsora and Tweek: Escaping Ledgetraps",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=jMGl4V3gG2c",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-proj",
+          "type": "youtube",
+          "video_id": "Xxs5B8PSGMs",
+          "start": 0,
+          "titre": "Poppt — How to Deal with Projectiles",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=Xxs5B8PSGMs",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Jongle vertical à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-kill-confirm",
+          "type": "schema",
+          "schema": "kill-confirm",
+          "titre": "Lancer → kill confirm",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-edgeguard",
+          "type": "schema",
+          "schema": "edgeguard",
+          "titre": "Edgeguard contre l'up-B de Bowser",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Bouclier + up-B hors bouclier : c'est ta meilleure punition contre ses aériens sur bouclier.",
+        "Ne poursuis pas Pikachu en l'air : tiens le sol avec ftilt / dtilt et attends qu'il vienne.",
+        "Récupère haut et garde ton double saut ; ne reviens jamais sous le rebord."
+      ]
+    },
+    {
+      "id": "peach",
+      "nom": "Peach / Daisy",
+      "difficulte": 9,
+      "conseil_rapide": "Ne saute pas dans son float. Reste au sol, bouclier les aériens, punis par up-B OoS ou side-B. Attrape les navets.",
+      "win_conditions": [
+        "Float cancel aériens (nair, fair, bair) : pression sûre sur bouclier et combos longs sur toi.",
+        "Navets : contrôle du neutre et démarreurs de combos.",
+        "Combos down-throw / nair vers fair en float jusqu'aux kills au bord.",
+        "Edgeguard prolongé grâce au float."
+      ],
+      "setups": [
+        {
+          "titre": "Float au-dessus de toi",
+          "reconnaitre": "Peach flotte à hauteur de saut court, prête à dropper un aérien.",
+          "reponse": "Ne saute pas : reste sous elle en bouclier ou recule ; punis à l'atterrissage."
+        },
+        {
+          "titre": "Navet tenu en main",
+          "reconnaitre": "Peach court vers toi un navet en main.",
+          "reponse": "Bouclier puis attrape le navet au sol ou en l'air (attaque/esquive) pour le renvoyer."
+        }
+      ],
+      "combos": [
+        {
+          "id": "peach-fc-nair",
+          "titre": "Float nair → jab / grab",
+          "inputs": [
+            "saut",
+            "float (maintien saut)",
+            "nair",
+            "atterrissage",
+            "jab ou grab"
+          ],
+          "conditions": {
+            "pourcent": "0–50 % (indicatif)",
+            "position": "Au sol, milieu de scène",
+            "di": "—"
+          },
+          "but": "racking",
+          "variantes": [
+            "Nair → dash attack",
+            "Nair → down-smash en lecture de roulade"
+          ],
+          "contre_mesures": [
+            "Bouclier le nair puis up-B hors bouclier immédiat",
+            "Si elle espace mal : side-B (Flying Slam) sur son atterrissage",
+            "Accroupis-toi contre les jabs pour réduire le recul"
+          ],
+          "medias": [
+            "gif-peach-nair",
+            "gif-peach-dsmash",
+            "gif-bowser-oos",
+            "schema-pression-bouclier"
+          ],
+          "ref_poppt": null,
+          "sources": []
+        },
+        {
+          "id": "peach-turnip-fair",
+          "titre": "Navet → float fair",
+          "inputs": [
+            "down-B (arracher navet)",
+            "lancer navet",
+            "saut + float",
+            "fair"
+          ],
+          "conditions": {
+            "pourcent": "30–90 % (indicatif)",
+            "position": "Mi-distance",
+            "di": "DI loin après le navet"
+          },
+          "but": "stage_control",
+          "variantes": [
+            "Navet → nair",
+            "Navet → grab"
+          ],
+          "contre_mesures": [
+            "Bouclier ou powershield le navet ; ne saute pas dedans",
+            "Attrape le navet (bouton attaque au contact) et renvoie-le",
+            "Avance sous le float avec dtilt pour casser son espacement"
+          ],
+          "medias": [
+            "poppt-proj",
+            "schema-zoning"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=Xxs5B8PSGMs",
+            "titre": "How to Deal with Projectiles",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": []
+        },
+        {
+          "id": "peach-dthrow-fair",
+          "titre": "Down-throw → fair (float)",
+          "inputs": [
+            "grab",
+            "down-throw",
+            "saut",
+            "float",
+            "fair"
+          ],
+          "conditions": {
+            "pourcent": "20–70 % (indicatif)",
+            "position": "Partout",
+            "di": "DI loin réduit le suivi"
+          },
+          "but": "racking",
+          "variantes": [
+            "Down-throw → nair → fair au bord",
+            "Au bord : bair pour tuer"
+          ],
+          "contre_mesures": [
+            "Évite le grab : pas de bouclier figé face à elle au sol",
+            "DI éloignée au lancer",
+            "Esquive aérienne tardive : Peach couvre bien les esquives réflexes"
+          ],
+          "medias": [
+            "gif-peach-bair",
+            "poppt-zack",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": []
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-peach-nair",
+          "type": "gif",
+          "titre": "Nair de Peach (float cancel)",
+          "url": "https://ssb.wiki.gallery/images/thumb/8/80/PeachNAirSSBU.gif/350px-PeachNAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Peach_(SSBU)/Neutral_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-peach-bair",
+          "type": "gif",
+          "titre": "Bair de Peach (kill au bord)",
+          "url": "https://ssb.wiki.gallery/images/thumb/1/11/PeachBAirSSBU.gif/350px-PeachBAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Peach_(SSBU)/Back_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-peach-dsmash",
+          "type": "gif",
+          "titre": "Down-smash de Peach (punition de roulade)",
+          "url": "https://ssb.wiki.gallery/images/thumb/1/1d/PeachDSmashSSBU.gif/350px-PeachDSmashSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Peach_(SSBU)/Down_smash",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-oos",
+          "type": "gif",
+          "titre": "Ta réponse : Whirling Fortress (up-B) hors bouclier",
+          "url": "https://ssb.wiki.gallery/images/thumb/8/89/BowserWhirlingFortressGroundedSSBU.gif/500px-BowserWhirlingFortressGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-proj",
+          "type": "youtube",
+          "video_id": "Xxs5B8PSGMs",
+          "start": 0,
+          "titre": "Poppt — How to Deal with Projectiles",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=Xxs5B8PSGMs",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-zack",
+          "type": "youtube",
+          "video_id": "crcmNx_Lxu4",
+          "start": 0,
+          "titre": "Poppt — The Mind of Zackray: Landing from Disadvantage",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-pression-bouclier",
+          "type": "schema",
+          "schema": "pression-bouclier",
+          "titre": "Aérien sur bouclier → up-B OoS",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-zoning",
+          "type": "schema",
+          "schema": "zoning",
+          "titre": "Projectile + approche",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Suivi aérien après lancer",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Tiens le sol : Peach veut que tu sautes dans son float.",
+        "Side-B (Flying Slam) passe le bouclier : utilise-le quand elle atterrit en bouclier près de toi.",
+        "Attrape et renvoie les navets : tu lui retires son outil de neutre."
+      ]
+    },
+    {
+      "id": "gnw",
+      "nom": "Mr. Game & Watch",
+      "difficulte": 7,
+      "conseil_rapide": "Pas de souffle de feu face au seau. Joue au sol, punis ses atterrissages, et méfie-toi de son up-B hors bouclier quasi instantané.",
+      "win_conditions": [
+        "Aériens rapides (nair, bair, up-air) : combos et pression sur ta grosse hitbox.",
+        "Seau (down-B) : absorbe ton souffle de feu et le renvoie en coup très puissant.",
+        "Up-B hors bouclier très rapide : punit tes coups sur bouclier.",
+        "Edgeguard : down-air et bair hors scène."
+      ],
+      "setups": [
+        {
+          "titre": "Seau rempli",
+          "reconnaitre": "G&W a absorbé un projectile (le seau goutte).",
+          "reponse": "Évite les échanges proches où il peut le sortir ; reste hors portée et respecte-le jusqu'à ce qu'il le vide."
+        },
+        {
+          "titre": "Atterrissage en bair",
+          "reconnaitre": "G&W descend vers toi avec un bair multi-coups.",
+          "reponse": "Bouclier tôt puis up-B OoS ou grab ; ne réponds pas en sautant."
+        }
+      ],
+      "combos": [
+        {
+          "id": "gnw-nair-uair",
+          "titre": "Nair → up-air",
+          "inputs": [
+            "saut court",
+            "nair",
+            "saut",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "0–60 % (indicatif)",
+            "position": "Milieu de scène",
+            "di": "DI vers l'extérieur"
+          },
+          "but": "racking",
+          "variantes": [
+            "Nair → up-air → up-air",
+            "Nair → grab en lecture de bouclier"
+          ],
+          "contre_mesures": [
+            "DI vers l'extérieur et esquive tardive",
+            "Crouch au sol contre le nair bas",
+            "Si tu as l'avantage d'atterrissage : Bowser Bomb pour retomber vite"
+          ],
+          "medias": [
+            "gif-gnw-uair",
+            "poppt-zack",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": [
+            {
+              "titre": "SmashWiki — Poppt1 (main Mr. Game & Watch)",
+              "url": "https://www.ssbwiki.com/Smasher:Poppt1"
+            }
+          ]
+        },
+        {
+          "id": "gnw-bucket",
+          "titre": "Seau : absorption → renvoi",
+          "inputs": [
+            "down-B (absorbe le souffle)",
+            "x3 remplissages",
+            "down-B (vide le seau)"
+          ],
+          "conditions": {
+            "pourcent": "Tue tôt une fois plein (indicatif)",
+            "position": "Contact",
+            "di": "DI de survie vers le haut-intérieur"
+          },
+          "but": "kill",
+          "variantes": [
+            "Seau en l'air pendant ton edgeguard au souffle"
+          ],
+          "contre_mesures": [
+            "N'utilise pas le souffle de feu (neutral-B) contre G&W, sauf pour un dégât sûr hors seau",
+            "S'il a un seau plein : joue à distance de grab / ftilt",
+            "Punis l'animation de vidage s'il la rate"
+          ],
+          "medias": [
+            "gif-gnw-bucket",
+            "schema-zoning"
+          ],
+          "ref_poppt": null,
+          "sources": [
+            {
+              "titre": "SmashWiki — Mr. Game & Watch (SSBU)",
+              "url": "https://www.ssbwiki.com/Mr._Game_%26_Watch_(SSBU)"
+            }
+          ]
+        },
+        {
+          "id": "gnw-oos",
+          "titre": "Up-B hors bouclier → up-air",
+          "inputs": [
+            "bouclier",
+            "up-B (Fire)",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "Tous % ; plus dangereux en plateforme haute",
+            "position": "Après un de tes coups sur son bouclier",
+            "di": "—"
+          },
+          "but": "racking",
+          "variantes": [
+            "Up-B OoS → bair au bord"
+          ],
+          "contre_mesures": [
+            "Espace tes fair / ftilt à la pointe sur son bouclier",
+            "Évite nair et coups lents collés à son bouclier",
+            "Mix avec side-B (grab) pour casser son réflexe de bouclier"
+          ],
+          "medias": [
+            "gif-gnw-oos",
+            "gif-gnw-uair",
+            "poppt-bait",
+            "schema-pression-bouclier"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=DyMSbyS40VM",
+            "titre": "The Mind of Samsora: Bait and Punish",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": [
+            {
+              "titre": "SmashWiki — Up special de G&W (démarrage frame 3)",
+              "url": "https://www.ssbwiki.com/Mr._Game_%26_Watch_(SSBU)/Up_special"
+            }
+          ]
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-gnw-uair",
+          "type": "gif",
+          "titre": "Up-air de G&W",
+          "url": "https://ssb.wiki.gallery/images/a/a3/MrGame%26WatchUAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Mr._Game_%26_Watch_(SSBU)/Up_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-gnw-oos",
+          "type": "gif",
+          "titre": "Up-B de G&W (OoS frame 3)",
+          "url": "https://ssb.wiki.gallery/images/thumb/6/65/MrGame%26WatchUSpecialGroundedSSBU.gif/250px-MrGame%26WatchUSpecialGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Mr._Game_%26_Watch_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-gnw-bucket",
+          "type": "gif",
+          "titre": "Seau plein (Oil Panic) : la frappe à éviter",
+          "url": "https://ssb.wiki.gallery/images/thumb/c/c4/MrGame%26WatchDSpecialAttackSSBU.gif/350px-MrGame%26WatchDSpecialAttackSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Mr._Game_%26_Watch_(SSBU)/Down_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-bait",
+          "type": "youtube",
+          "video_id": "DyMSbyS40VM",
+          "start": 0,
+          "titre": "Poppt — The Mind of Samsora: Bait and Punish",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=DyMSbyS40VM",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-zack",
+          "type": "youtube",
+          "video_id": "crcmNx_Lxu4",
+          "start": 0,
+          "titre": "Poppt — The Mind of Zackray: Landing from Disadvantage",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Jongle à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-pression-bouclier",
+          "type": "schema",
+          "schema": "pression-bouclier",
+          "titre": "Ton coup sur son bouclier → son OoS",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-zoning",
+          "type": "schema",
+          "schema": "zoning",
+          "titre": "Projectile absorbé",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Range le souffle de feu : le seau le transforme en kill contre toi.",
+        "Espace tes coups sur son bouclier : son up-B hors bouclier punit tout ce qui est collé.",
+        "Il est léger : un bair ou un up-B bien placé à ~100 % suffit souvent à tuer."
+      ]
+    },
+    {
+      "id": "cloud",
+      "nom": "Cloud",
+      "difficulte": 4,
+      "conseil_rapide": "Surveille la jauge de Limite. Sans Limite, sa récupération est faible : sors l'edgeguarder. Punis ses aériens sur bouclier par up-B OoS.",
+      "win_conditions": [
+        "Aériens à longue épée (fair, bair, nair) : espacement sûr contre tes coups lents.",
+        "Jongles up-air sur ta grosse hitbox.",
+        "Limite chargée : Cross Slash / Blade Beam renforcés pour tuer ou revenir.",
+        "Edgeguard bair / fair sur ta récupération."
+      ],
+      "setups": [
+        {
+          "titre": "Charge de Limite à distance",
+          "reconnaitre": "Cloud recule et charge (down-B).",
+          "reponse": "Avance et force-le à arrêter ; ne le laisse pas charger gratuitement."
+        },
+        {
+          "titre": "Récupération sans Limite",
+          "reconnaitre": "Cloud sous le rebord, Limite vide.",
+          "reponse": "Sors avec fair / bair, ou couvre le rebord : son up-B est court et vertical."
+        }
+      ],
+      "combos": [
+        {
+          "id": "cloud-uair-chain",
+          "titre": "Up-air → up-air (jongle)",
+          "inputs": [
+            "up-air",
+            "saut",
+            "up-air",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "20–80 % (indicatif)",
+            "position": "Bowser au-dessus de Cloud",
+            "di": "DI latérale"
+          },
+          "but": "racking",
+          "variantes": [
+            "Finit en Climhazzard (up-B)",
+            "Finit en up-smash à l'atterrissage"
+          ],
+          "contre_mesures": [
+            "DI vers le côté pour sortir de la colonne",
+            "Bowser Bomb (down-B) pour couper le jongle si Cloud est sous toi",
+            "Atterris vers le rebord plutôt qu'au centre"
+          ],
+          "medias": [
+            "gif-cloud-uair",
+            "gif-cloud-climhazzard",
+            "poppt-zack",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": []
+        },
+        {
+          "id": "cloud-dthrow-uair",
+          "titre": "Down-throw → up-air",
+          "inputs": [
+            "grab",
+            "down-throw",
+            "saut",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "0–50 % (indicatif)",
+            "position": "Partout",
+            "di": "DI loin"
+          },
+          "but": "racking",
+          "variantes": [
+            "Down-throw → nair",
+            "Down-throw → fair au bord"
+          ],
+          "contre_mesures": [
+            "Évite le grab : mélange tes options de bouclier",
+            "DI éloignée",
+            "Ne sors pas d'esquive réflexe : il l'attend"
+          ],
+          "medias": [
+            "gif-cloud-uair",
+            "schema-jongle"
+          ],
+          "ref_poppt": null,
+          "sources": []
+        },
+        {
+          "id": "cloud-limit-cross",
+          "titre": "Limite → Cross Slash (kill)",
+          "inputs": [
+            "Limite chargée",
+            "side-B (Cross Slash)"
+          ],
+          "conditions": {
+            "pourcent": "~90 %+ (indicatif)",
+            "position": "Mi-distance, souvent en réponse à ton approche",
+            "di": "DI de survie"
+          },
+          "but": "kill",
+          "variantes": [
+            "Limite Blade Beam pour forcer ton approche",
+            "Limite Climhazzard pour revenir de très loin",
+            "Limite Finishing Touch (down-B) : éjection horizontale, à respecter près du bord"
+          ],
+          "contre_mesures": [
+            "Bouclier puis punis le Cross Slash (grosse fin d'animation)",
+            "Ne fais pas d'approche prévisible quand la Limite est chargée",
+            "Force-le à utiliser la Limite avant de prendre des risques"
+          ],
+          "medias": [
+            "gif-cloud-finishing",
+            "schema-kill-confirm"
+          ],
+          "ref_poppt": null,
+          "sources": [
+            {
+              "titre": "SmashWiki — Cloud (SSBU)",
+              "url": "https://www.ssbwiki.com/Cloud_(SSBU)"
+            }
+          ]
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-cloud-uair",
+          "type": "gif",
+          "titre": "Up-air de Cloud (jongle)",
+          "url": "https://ssb.wiki.gallery/images/thumb/9/90/CloudUAirSSBU.gif/500px-CloudUAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Cloud_(SSBU)/Up_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-cloud-climhazzard",
+          "type": "gif",
+          "titre": "Climhazzard (up-B) : récupération courte sans Limite",
+          "url": "https://ssb.wiki.gallery/images/9/9d/CloudClimhazzardSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Cloud_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-cloud-finishing",
+          "type": "gif",
+          "titre": "Finishing Touch (Limite down-B) : autre kill de Limite",
+          "url": "https://ssb.wiki.gallery/images/thumb/7/73/CloudFinishingTouchSSBU.gif/300px-CloudFinishingTouchSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Cloud_(SSBU)/Down_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-oos",
+          "type": "gif",
+          "titre": "Ta réponse : Whirling Fortress (up-B) hors bouclier",
+          "url": "https://ssb.wiki.gallery/images/thumb/8/89/BowserWhirlingFortressGroundedSSBU.gif/500px-BowserWhirlingFortressGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-bair",
+          "type": "gif",
+          "titre": "Ta réponse : bair de Bowser (edgeguard / kill)",
+          "url": "https://ssb.wiki.gallery/images/thumb/a/aa/BowserBAirSSBU.gif/560px-BowserBAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Back_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-zack",
+          "type": "youtube",
+          "video_id": "crcmNx_Lxu4",
+          "start": 0,
+          "titre": "Poppt — The Mind of Zackray: Landing from Disadvantage",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-ledgetrap",
+          "type": "youtube",
+          "video_id": "EmRPEV8NU-s",
+          "start": 0,
+          "titre": "Poppt — The Mind of MKLeo: Ledgetrapping",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=EmRPEV8NU-s",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Jongle up-air à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-edgeguard",
+          "type": "schema",
+          "schema": "edgeguard",
+          "titre": "Edgeguard (inversé : toi sur Cloud)",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-kill-confirm",
+          "type": "schema",
+          "schema": "kill-confirm",
+          "titre": "Kill par Limite",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Compte la Limite : sans elle, Cloud revient mal — c'est ta fenêtre de kill hors scène.",
+        "Up-B hors bouclier contre ses aériens mal espacés.",
+        "Il pèse moins que toi : un side-B arrière au rebord peut le tuer tôt."
+      ]
+    },
+    {
+      "id": "fox",
+      "nom": "Fox",
+      "difficulte": 4,
+      "conseil_rapide": "Ignore les lasers (pas de flinch), bloque ses approches, et punis fort : Fox est léger et fast-faller, il meurt tôt et se fait combo.",
+      "win_conditions": [
+        "Vitesse : choisit quand engager, dash attack et nair rapides.",
+        "Jongles up-air sur toi, kill confirm up-throw → up-air à haut %.",
+        "Pression aux lasers (dégâts seulement, sans flinch).",
+        "Up-smash en punition de tes atterrissages."
+      ],
+      "setups": [
+        {
+          "titre": "Pluie de lasers",
+          "reconnaitre": "Fox reste à distance et tire en boucle.",
+          "reponse": "Avance en marchant / en bouclier par à-coups : les lasers ne t'interrompent pas."
+        },
+        {
+          "titre": "Récupération Fire Fox",
+          "reconnaitre": "Fox charge son up-B sous le rebord.",
+          "reponse": "Couvre avec le souffle de feu ou sors en bair : la charge est longue et prévisible."
+        }
+      ],
+      "combos": [
+        {
+          "id": "fox-uthrow-uair",
+          "titre": "Up-throw → up-air (kill)",
+          "inputs": [
+            "grab",
+            "up-throw",
+            "saut",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "Haut % sur Bowser (indicatif 120 %+)",
+            "position": "Partout ; mieux sous plateforme",
+            "di": "DI latérale fait rater"
+          },
+          "but": "kill",
+          "variantes": [
+            "Up-throw → up-air sur plateforme : tue plus tôt"
+          ],
+          "contre_mesures": [
+            "DI vers le côté au lancer",
+            "Ne reste pas en bouclier immobile à haut %",
+            "Mash pour sortir plus vite du grab"
+          ],
+          "medias": [
+            "gif-fox-uthrow",
+            "gif-fox-uair",
+            "schema-kill-confirm"
+          ],
+          "ref_poppt": null,
+          "sources": [
+            {
+              "titre": "SmashWiki — Fox (SSBU)",
+              "url": "https://www.ssbwiki.com/Fox_(SSBU)"
+            }
+          ]
+        },
+        {
+          "id": "fox-nair-usmash",
+          "titre": "Nair → up-smash",
+          "inputs": [
+            "saut court",
+            "nair",
+            "atterrissage",
+            "up-smash"
+          ],
+          "conditions": {
+            "pourcent": "30–90 % (indicatif)",
+            "position": "Au sol",
+            "di": "—"
+          },
+          "but": "racking",
+          "variantes": [
+            "Nair → jab",
+            "Nair → grab"
+          ],
+          "contre_mesures": [
+            "Bouclier le nair et up-B hors bouclier",
+            "Crouch au sol contre nair bas",
+            "Ftilt pour couvrir son approche"
+          ],
+          "medias": [
+            "gif-fox-nair",
+            "gif-bowser-oos",
+            "schema-pression-bouclier"
+          ],
+          "ref_poppt": null,
+          "sources": []
+        },
+        {
+          "id": "fox-uair-juggle",
+          "titre": "Jongle up-air",
+          "inputs": [
+            "up-tilt",
+            "saut",
+            "up-air",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "0–60 % (indicatif)",
+            "position": "Bowser au-dessus",
+            "di": "DI latérale"
+          },
+          "but": "racking",
+          "variantes": [
+            "Finit en up-smash"
+          ],
+          "contre_mesures": [
+            "Bowser Bomb pour couper",
+            "DI latérale + esquive tardive",
+            "Atterris au rebord"
+          ],
+          "medias": [
+            "gif-fox-uair",
+            "poppt-zack",
+            "schema-jongle"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+            "titre": "The Mind of Zackray: Landing from Disadvantage",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": []
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-fox-uthrow",
+          "type": "gif",
+          "titre": "Up-throw de Fox",
+          "url": "https://ssb.wiki.gallery/images/4/42/FoxUThrowSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Fox_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-fox-uair",
+          "type": "gif",
+          "titre": "Up-air de Fox (kill confirm / jongle)",
+          "url": "https://ssb.wiki.gallery/images/b/b1/FoxUAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Fox_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-fox-nair",
+          "type": "gif",
+          "titre": "Nair de Fox",
+          "url": "https://ssb.wiki.gallery/images/thumb/3/37/FoxNAirSSBU.gif/500px-FoxNAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Fox_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-fox-blaster",
+          "type": "gif",
+          "titre": "Blaster : lasers sans flinch",
+          "url": "https://ssb.wiki.gallery/images/thumb/5/58/FoxNSpecialSSBU.gif/500px-FoxNSpecialSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Fox_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-fox-firefox",
+          "type": "gif",
+          "titre": "Fire Fox (up-B) : récupération à edgeguarder",
+          "url": "https://ssb.wiki.gallery/images/thumb/c/c8/FoxUSpecialSSBU.gif/500px-FoxUSpecialSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Fox_(SSBU)/Hitboxes",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-oos",
+          "type": "gif",
+          "titre": "Ta réponse : Whirling Fortress (up-B) hors bouclier",
+          "url": "https://ssb.wiki.gallery/images/thumb/8/89/BowserWhirlingFortressGroundedSSBU.gif/500px-BowserWhirlingFortressGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Up_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-bair",
+          "type": "gif",
+          "titre": "Ta réponse : bair de Bowser (edgeguard / kill)",
+          "url": "https://ssb.wiki.gallery/images/thumb/a/aa/BowserBAirSSBU.gif/560px-BowserBAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Back_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-proj",
+          "type": "youtube",
+          "video_id": "Xxs5B8PSGMs",
+          "start": 0,
+          "titre": "Poppt — How to Deal with Projectiles",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=Xxs5B8PSGMs",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-zack",
+          "type": "youtube",
+          "video_id": "crcmNx_Lxu4",
+          "start": 0,
+          "titre": "Poppt — The Mind of Zackray: Landing from Disadvantage",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-kill-confirm",
+          "type": "schema",
+          "schema": "kill-confirm",
+          "titre": "Up-throw → up-air",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-zoning",
+          "type": "schema",
+          "schema": "zoning",
+          "titre": "Lasers sans flinch",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-edgeguard",
+          "type": "schema",
+          "schema": "edgeguard",
+          "titre": "Edgeguard Fire Fox",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-pression-bouclier",
+          "type": "schema",
+          "schema": "pression-bouclier",
+          "titre": "Aérien sur bouclier → up-B OoS",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Jongle à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Les lasers ne t'arrêtent pas : avance, ne panique pas.",
+        "Fox est fast-faller : nair → up-tilt et grab → up-B le combotent bien.",
+        "Edgeguarde son Fire Fox : charge longue, trajectoire lisible."
+      ]
+    },
+    {
+      "id": "incineroar",
+      "nom": "Félinferno",
+      "difficulte": 2,
+      "conseil_rapide": "Ne frappe pas dans sa Vengeance (down-B). Envoie-le hors scène : sa récupération est faible.",
+      "win_conditions": [
+        "Vengeance (counter) qui le renforce et tue tôt.",
+        "Grabs et command grab (side-B) : gros dégâts.",
+        "Darkest Lariat (neutral-B) hors bouclier / pour casser la pression."
+      ],
+      "setups": [
+        {
+          "titre": "Vengeance anticipée",
+          "reconnaitre": "Félinferno s'arrête près de toi, prêt à contrer.",
+          "reponse": "Grab ou side-B (les grabs passent le counter), ou attends qu'il bouge."
+        },
+        {
+          "titre": "Récupération up-B",
+          "reconnaitre": "Félinferno sous le rebord.",
+          "reponse": "Bair / fair hors scène ou couvre le rebord : sa récupération est courte."
+        }
+      ],
+      "combos": [
+        {
+          "id": "inci-revenge",
+          "titre": "Vengeance → smash / lancer amplifié",
+          "inputs": [
+            "down-B (Vengeance) absorbe ton coup",
+            "side-smash ou lancer"
+          ],
+          "conditions": {
+            "pourcent": "Tue tôt avec le bonus (indicatif)",
+            "position": "Contact",
+            "di": "DI de survie"
+          },
+          "but": "kill",
+          "variantes": [
+            "Vengeance → Alolan Whip"
+          ],
+          "contre_mesures": [
+            "Grab ou side-B dans la Vengeance",
+            "Ne lance pas de smash prévisible quand il peut contrer",
+            "Fait-le bouger avant d'engager"
+          ],
+          "medias": [
+            "gif-inci-revenge",
+            "poppt-bait",
+            "schema-pression-bouclier"
+          ],
+          "ref_poppt": {
+            "statut": "lie",
+            "video_url": "https://www.youtube.com/watch?v=DyMSbyS40VM",
+            "titre": "The Mind of Samsora: Bait and Punish",
+            "timestamp": "",
+            "note": "Leçon générale de la playlist School of Smash Fundamentals (vidéo entière). Ajoute le timestamp précis dans Admin quand tu l'as repéré."
+          },
+          "sources": [
+            {
+              "titre": "SmashWiki — Incineroar (SSBU)",
+              "url": "https://www.ssbwiki.com/Incineroar_(SSBU)"
+            }
+          ]
+        },
+        {
+          "id": "inci-dthrow",
+          "titre": "Down-throw → up-air / fair",
+          "inputs": [
+            "grab",
+            "down-throw",
+            "saut",
+            "up-air"
+          ],
+          "conditions": {
+            "pourcent": "0–40 % (indicatif)",
+            "position": "Partout",
+            "di": "DI loin"
+          },
+          "but": "racking",
+          "variantes": [
+            "Down-throw → fair au bord"
+          ],
+          "contre_mesures": [
+            "DI loin au lancer",
+            "Esquive tardive",
+            "Garde l'espace : sa portée est courte"
+          ],
+          "medias": [
+            "schema-jongle"
+          ],
+          "ref_poppt": null,
+          "sources": []
+        },
+        {
+          "id": "inci-whip",
+          "titre": "Alolan Whip (side-B)",
+          "inputs": [
+            "side-B",
+            "lariat (timing)"
+          ],
+          "conditions": {
+            "pourcent": "Tue au bord à haut % (indicatif)",
+            "position": "Près des cordes / du bord",
+            "di": "—"
+          },
+          "but": "kill",
+          "variantes": [
+            "Whip raté = gros punish"
+          ],
+          "contre_mesures": [
+            "Bouclier ou saut au-dessus",
+            "Punis la fin d'animation par side-B ou fsmash",
+            "Reste hors du bord quand il a l'élan"
+          ],
+          "medias": [
+            "gif-inci-whip",
+            "schema-kill-confirm"
+          ],
+          "ref_poppt": null,
+          "sources": []
+        }
+      ],
+      "medias": [
+        {
+          "id": "gif-inci-revenge",
+          "type": "gif",
+          "titre": "Vengeance (down-B) : le counter à ne pas frapper",
+          "url": "https://ssb.wiki.gallery/images/thumb/d/d4/IncineroarRevengeSSBU.gif/300px-IncineroarRevengeSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Incineroar_(SSBU)/Down_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-inci-whip",
+          "type": "gif",
+          "titre": "Alolan Whip (side-B)",
+          "url": "https://ssb.wiki.gallery/images/thumb/4/49/IncineroarAlolanWhipGroundedSSBU.gif/350px-IncineroarAlolanWhipGroundedSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Incineroar_(SSBU)/Side_special",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "gif-bowser-bair",
+          "type": "gif",
+          "titre": "Ta réponse : bair de Bowser (edgeguard / kill)",
+          "url": "https://ssb.wiki.gallery/images/thumb/a/aa/BowserBAirSSBU.gif/560px-BowserBAirSSBU.gif",
+          "source": "SmashWiki (hitbox)",
+          "auteur": "Contributeurs SmashWiki · images du jeu © Nintendo",
+          "lien": "https://www.ssbwiki.com/Bowser_(SSBU)/Back_aerial",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-bait",
+          "type": "youtube",
+          "video_id": "DyMSbyS40VM",
+          "start": 0,
+          "titre": "Poppt — The Mind of Samsora: Bait and Punish",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=DyMSbyS40VM",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "poppt-ledgetrap",
+          "type": "youtube",
+          "video_id": "EmRPEV8NU-s",
+          "start": 0,
+          "titre": "Poppt — The Mind of MKLeo: Ledgetrapping",
+          "source": "YouTube · School of Smash Fundamentals",
+          "auteur": "Poppt1",
+          "lien": "https://www.youtube.com/watch?v=EmRPEV8NU-s",
+          "timestamp": "",
+          "permission": "lien_seulement",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-edgeguard",
+          "type": "schema",
+          "schema": "edgeguard",
+          "titre": "Edgeguard (toi sur Félinferno)",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-pression-bouclier",
+          "type": "schema",
+          "schema": "pression-bouclier",
+          "titre": "Ne frappe pas dans le counter",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-jongle",
+          "type": "schema",
+          "schema": "jongle",
+          "titre": "Jongle à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        },
+        {
+          "id": "schema-kill-confirm",
+          "type": "schema",
+          "schema": "kill-confirm",
+          "titre": "Kill confirm à reconnaître",
+          "source": "PréMatch",
+          "auteur": "Schéma original",
+          "lien": "",
+          "timestamp": "",
+          "permission": "original",
+          "statut": "verifie"
+        }
+      ],
+      "conseils_bowser": [
+        "Grab et side-B passent sa Vengeance : utilise-les quand il attend.",
+        "Envoie-le hors scène et sors : sa récupération est l'une des pires.",
+        "Tu as la portée : ftilt et fair à la pointe le tiennent dehors."
+      ]
+    }
+  ]
+}

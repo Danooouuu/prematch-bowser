@@ -1,0 +1,237 @@
+{
+  "version": "2026.11.05",
+  "drills": [
+    {
+      "id": "drill-oos",
+      "titre": "Réflexe up-B hors bouclier",
+      "description": "CPU niveau 9 ou ami : il attaque ton bouclier avec des aériens. Réponds uniquement par up-B OoS.",
+      "type": "timer",
+      "duree_s": 180,
+      "repetitions": 3,
+      "etapes": [
+        "Mode Entraînement, CPU qui saute + attaque",
+        "Bouclier tenu, relâche jamais avant l'impact",
+        "Up-B dès la fin du stun de bouclier",
+        "Note tes réussites / 10"
+      ],
+      "matchups": [
+        "pikachu",
+        "peach",
+        "gnw",
+        "cloud",
+        "fox"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "drill-recovery",
+      "titre": "Récupération haute (anti-Pikachu)",
+      "description": "Te faire éjecter puis revenir haut sans gaspiller ton up-B.",
+      "type": "checklist",
+      "duree_s": 300,
+      "repetitions": 1,
+      "etapes": [
+        "Double saut gardé jusqu'au retour",
+        "Arrivée au-dessus du rebord (pas dessous)",
+        "Mix : rebord / scène / plateforme",
+        "Up-B seulement si l'adversaire est collé"
+      ],
+      "matchups": [
+        "pikachu",
+        "falco",
+        "gnw"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "drill-nair-utilt",
+      "titre": "Nair fast-fall → up-tilt",
+      "description": "Combo de base de Bowser listé par Game8 : nair en fast-fall puis up-tilt à l'atterrissage.",
+      "type": "checklist",
+      "duree_s": 240,
+      "repetitions": 20,
+      "etapes": [
+        "Saut court + nair",
+        "Fast-fall pendant le nair",
+        "Up-tilt dès l'atterrissage",
+        "Tester à 0 %, 30 %, 60 % sur Fox puis Mario"
+      ],
+      "matchups": [
+        "fox",
+        "cloud"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "Game8 (combo de base)",
+        "lien": "https://game8.co/games/SSBU/archives/281188",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "drill-edgeguard",
+      "titre": "Edgeguard Cloud sans Limite",
+      "description": "CPU Cloud récupère : couvre le rebord ou sors en bair.",
+      "type": "timer",
+      "duree_s": 240,
+      "repetitions": 2,
+      "etapes": [
+        "Envoie le CPU hors scène (fsmash)",
+        "Option 1 : bair offstage",
+        "Option 2 : souffle de feu au rebord",
+        "Option 3 : attendre au rebord et punir"
+      ],
+      "matchups": [
+        "cloud",
+        "incineroar",
+        "littlemac"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "poppt-zackray",
+      "titre": "Atterrir en désavantage",
+      "description": "Bowser a un désavantage faible : travaille tes options d'atterrissage contre les jongles. Étapes proposées par PréMatch à partir du thème de la leçon : ajuste-les après visionnage.",
+      "type": "timer",
+      "duree_s": 180,
+      "repetitions": 3,
+      "etapes": [
+        "Regarder la leçon (Zackray)",
+        "CPU Pikachu / Fox niveau 9 qui jongle",
+        "Alterner : dérive + esquive tardive, Bowser Bomb, atterrissage au rebord",
+        "Noter quelle option passe le plus"
+      ],
+      "matchups": [
+        "pikachu",
+        "fox",
+        "cloud",
+        "gnw"
+      ],
+      "origine": {
+        "type": "poppt",
+        "source_id": "poppt1",
+        "auteur": "Poppt1 — School of Smash Fundamentals",
+        "lien": "https://www.youtube.com/watch?v=crcmNx_Lxu4",
+        "titre_video": "The Mind of Zackray: Landing from Disadvantage",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "poppt-ledge",
+      "titre": "Sortir des ledgetraps",
+      "description": "Varier tes options au rebord pour ne pas te faire lire. Étapes proposées par PréMatch à partir du thème de la leçon : ajuste-les après visionnage.",
+      "type": "timer",
+      "duree_s": 240,
+      "repetitions": 2,
+      "etapes": [
+        "Regarder la leçon (Samsora & Tweek)",
+        "Au rebord : saut, roulade, attaque, lâcher + double saut",
+        "Ne jamais répéter la même option 2 fois de suite",
+        "Ami ou CPU qui couvre le rebord"
+      ],
+      "matchups": [
+        "pikachu",
+        "peach",
+        "gnw"
+      ],
+      "origine": {
+        "type": "poppt",
+        "source_id": "poppt1",
+        "auteur": "Poppt1 — School of Smash Fundamentals",
+        "lien": "https://www.youtube.com/watch?v=jMGl4V3gG2c",
+        "titre_video": "The Mind of Samsora and Tweek: Escaping Ledgetraps",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "poppt-projectiles",
+      "titre": "Gérer les projectiles",
+      "description": "Avancer contre Thunder Jolt, navets et lasers sans prendre de risques. Étapes proposées par PréMatch à partir du thème de la leçon : ajuste-les après visionnage.",
+      "type": "timer",
+      "duree_s": 180,
+      "repetitions": 3,
+      "etapes": [
+        "Regarder la leçon",
+        "Avancer en bouclier par à-coups (pas de saut prévisible)",
+        "Powershield un projectile sur trois",
+        "Punir la fin d'animation du lanceur"
+      ],
+      "matchups": [
+        "pikachu",
+        "peach",
+        "fox"
+      ],
+      "origine": {
+        "type": "poppt",
+        "source_id": "poppt1",
+        "auteur": "Poppt1 — School of Smash Fundamentals",
+        "lien": "https://www.youtube.com/watch?v=Xxs5B8PSGMs",
+        "titre_video": "How to Deal with Projectiles",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "poppt-bait",
+      "titre": "Bait & punish",
+      "description": "Provoquer l'option adverse puis la punir (counter de Félinferno, up-B OoS de G&W). Étapes proposées par PréMatch à partir du thème de la leçon : ajuste-les après visionnage.",
+      "type": "timer",
+      "duree_s": 180,
+      "repetitions": 3,
+      "etapes": [
+        "Regarder la leçon (Samsora)",
+        "Feinter une approche puis reculer",
+        "Punir avec side-B ou grab",
+        "Compter les punitions réussies"
+      ],
+      "matchups": [
+        "incineroar",
+        "gnw"
+      ],
+      "origine": {
+        "type": "poppt",
+        "source_id": "poppt1",
+        "auteur": "Poppt1 — School of Smash Fundamentals",
+        "lien": "https://www.youtube.com/watch?v=DyMSbyS40VM",
+        "titre_video": "The Mind of Samsora: Bait and Punish",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "poppt-plan",
+      "titre": "Plan de jeu pré-match",
+      "description": "Construire un plan simple avant chaque set, en lien avec la fiche adverse. Étapes proposées par PréMatch à partir du thème de la leçon : ajuste-les après visionnage.",
+      "type": "checklist",
+      "duree_s": 300,
+      "repetitions": 1,
+      "etapes": [
+        "Regarder la leçon",
+        "Écrire 1 objectif neutre, 1 option de punition, 1 piège à éviter",
+        "Le relire dans la fiche juste avant le match",
+        "Débrief : qu'est-ce qui a marché ?"
+      ],
+      "matchups": [],
+      "origine": {
+        "type": "poppt",
+        "source_id": "poppt1",
+        "auteur": "Poppt1 — School of Smash Fundamentals",
+        "lien": "https://www.youtube.com/watch?v=ij6H8XQ5Me8",
+        "titre_video": "How to Create a Game Plan",
+        "timestamp": ""
+      }
+    }
+  ]
+}

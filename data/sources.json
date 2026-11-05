@@ -1,0 +1,155 @@
+{
+  "version": "2026.11.05",
+  "sources": [
+    {
+      "id": "poppt1",
+      "nom": "Poppt1 (Jordan Ridley)",
+      "priorite": 1,
+      "type": "youtube",
+      "description": "Joueur australien de Smash Ultimate, main Mr. Game & Watch, créateur YouTube. Sa playlist « School of Smash Fundamentals » (19 leçons : neutre, désavantage, ledgetrap, projectiles, plan de jeu…) est la référence pédagogique prioritaire de l'app.",
+      "chaine_url": "",
+      "channel_id": "UCT6XLwzp74bEG1ZO0KePWcw",
+      "channel_id_statut": "a_confirmer",
+      "playlist_url": "https://www.youtube.com/playlist?list=PLA_AadakUIBwwS3ttrVrTT-uNqJyDsWgE",
+      "mots_cles_veille": [
+        "bowser",
+        "game & watch",
+        "guide",
+        "matchup",
+        "combo",
+        "tutorial"
+      ],
+      "attribution": "Contenu © Poppt1 — lecture via le lecteur YouTube officiel et lien vers la vidéo originale, aucun ré-hébergement.",
+      "permission": "lien_seulement",
+      "reference": "https://www.ssbwiki.com/Smasher:Poppt1",
+      "playlist_nom": "School of Smash Fundamentals",
+      "playlist_id": "PLA_AadakUIBwwS3ttrVrTT-uNqJyDsWgE",
+      "videos": [
+        {
+          "video_id": "EK-Ga58YeK0",
+          "titre": "How to Get Good at Smash Bros as Fast as Possible (FREE LECTURE)"
+        },
+        {
+          "video_id": "crcmNx_Lxu4",
+          "titre": "The Mind of Zackray: Landing from Disadvantage"
+        },
+        {
+          "video_id": "fkeiYN2crmY",
+          "titre": "Understanding Risk vs Reward (FREE LECTURE)"
+        },
+        {
+          "video_id": "9UyWHlBFnQ8",
+          "titre": "How to Actually Analyse a VOD"
+        },
+        {
+          "video_id": "61tEahwFbUE",
+          "titre": "How to Win Neutral vs Pros"
+        },
+        {
+          "video_id": "8TYqIvxQdxw",
+          "titre": "Increasing Focus and Reducing Nerves for Tournaments"
+        },
+        {
+          "video_id": "9ve32POuzo4",
+          "titre": "How to Move Like a Pro"
+        },
+        {
+          "video_id": "ij6H8XQ5Me8",
+          "titre": "How to Create a Game Plan"
+        },
+        {
+          "video_id": "N17tPq9krcQ",
+          "titre": "How to Condition Your Opponent"
+        },
+        {
+          "video_id": "KzS23PD9pLM",
+          "titre": "How to use Timing & Tempo"
+        },
+        {
+          "video_id": "Lw8Sjkncx50",
+          "titre": "How to Adapt Fast"
+        },
+        {
+          "video_id": "Xxs5B8PSGMs",
+          "titre": "How to Deal with Projectiles"
+        },
+        {
+          "video_id": "5HIarZ2EbHI",
+          "titre": "How to Optimize Practice"
+        },
+        {
+          "video_id": "L35n2ttewMI",
+          "titre": "The Mind of MkLeo: Opponent in the Corner"
+        },
+        {
+          "video_id": "oKHrBh0vJUs",
+          "titre": "The Mind of Tweek: Escaping the Corner"
+        },
+        {
+          "video_id": "_vh3W5KllPE",
+          "titre": "The Mind of Nairo & Light: Aggressive Neutral"
+        },
+        {
+          "video_id": "DyMSbyS40VM",
+          "titre": "The Mind of Samsora: Bait and Punish"
+        },
+        {
+          "video_id": "EmRPEV8NU-s",
+          "titre": "The Mind of MKLeo: Ledgetrapping"
+        },
+        {
+          "video_id": "jMGl4V3gG2c",
+          "titre": "The Mind of Samsora and Tweek: Escaping Ledgetraps"
+        }
+      ]
+    },
+    {
+      "id": "smashwiki-gallery",
+      "nom": "SmashWiki — visualisations de hitbox",
+      "priorite": 2,
+      "type": "images",
+      "description": "GIFs de hitbox par coup (images du jeu avec zones de frappe). Affichés par lien depuis ssb.wiki.gallery.",
+      "chaine_url": "https://www.ssbwiki.com/Bowser_(SSBU)/Up_special",
+      "channel_id": "",
+      "mots_cles_veille": [],
+      "attribution": "Contributeurs SmashWiki · images du jeu © Nintendo",
+      "permission": "lien_seulement"
+    },
+    {
+      "id": "ufd",
+      "nom": "Ultimate Frame Data",
+      "priorite": 2,
+      "type": "site",
+      "description": "Frame data par personnage (démarrage, OoS, atterrissage).",
+      "chaine_url": "https://ultimateframedata.com/bowser",
+      "channel_id": "",
+      "mots_cles_veille": [],
+      "attribution": "Données : ultimateframedata.com",
+      "permission": "lien_seulement"
+    },
+    {
+      "id": "smashwiki",
+      "nom": "SmashWiki",
+      "priorite": 3,
+      "type": "wiki",
+      "description": "Pages personnages et matchups (licence CC BY-SA : citation avec attribution possible).",
+      "chaine_url": "https://www.ssbwiki.com/Bowser_(SSBU)",
+      "channel_id": "",
+      "mots_cles_veille": [],
+      "attribution": "SmashWiki, CC BY-SA",
+      "permission": "cc_by_sa"
+    },
+    {
+      "id": "game8",
+      "nom": "Game8 — Bowser Guide",
+      "priorite": 4,
+      "type": "site",
+      "description": "Tableau de matchups Bowser utilisé comme base du classement.",
+      "chaine_url": "https://game8.co/games/SSBU/archives/281188",
+      "channel_id": "",
+      "mots_cles_veille": [],
+      "attribution": "Game8",
+      "permission": "lien_seulement"
+    }
+  ]
+}
