@@ -1,7 +1,7 @@
 /* Service worker : coquille de l'app + données en cache-first → ouverture instantanée et hors-ligne.
    Changer VERSION à chaque mise à jour du contenu (tools/build-bundle.mjs le fait automatiquement). */
-const VERSION = 'prematch-2026.11.05-mw3o0cis';
-const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'i18n.js', 'store.js', 'schemas.js', 'combat.js', 'data/bundle.js', 'data/combat-data.js', 'icons/section-kill.png',
+const VERSION = 'prematch-2026.11.05-mw3oo3t2';
+const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'i18n.js', 'store.js', 'schemas.js', 'combat.js', 'data/bundle.js', 'data/combat-data.js', 'icons/section-kill.png', 'icons/nav-home.png', 'icons/nav-drills.png', 'icons/nav-flash.png', 'icons/nav-journal.png', 'icons/nav-settings.png', 'icons/nav-bolt.png',
   'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png',
   'icons/section-fiches.png', 'icons/section-drills.png', 'icons/section-revision.png', 'icons/section-journal.png', 'icons/section-framedata.png'];
 

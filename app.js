@@ -93,8 +93,8 @@
 
   /* ---------- Rendu générique ---------- */
   const nav = active => `<nav class="bottom" aria-label="Navigation">
-    ${[['home', '#/', '⌂'], ['drills', '#/drills', '⏱'], ['flash', '#/flash', '⧉'], ['journal', '#/journal', '✍'], ['settings', '#/reglages', '⚙']]
-      .map(([k, href, ic]) => `<a href="${href}" class="${active === k ? 'on' : ''}"><span aria-hidden="true">${ic}</span>${T('nav_' + k)}</a>`).join('')}</nav>`;
+    ${[['home', '#/'], ['drills', '#/drills'], ['flash', '#/flash'], ['journal', '#/journal'], ['settings', '#/reglages']]
+      .map(([k, href]) => `<a href="${href}" class="${active === k ? 'on' : ''}"><img src="icons/nav-${k}.png" alt="" width="30" height="30">${T('nav_' + k)}</a>`).join('')}</nav>`;
   const top = (title, backHref, extra = '', headId = '') => `<header class="top">
     ${backHref ? `<a class="icon-btn" href="${backHref}" aria-label="${T('back')}">‹</a>` : `<div class="brand">${T('app')} <span>${esc(mainNom())}</span></div>`}
     ${backHref ? `${headId ? head(headId, 36) : ''}<h1>${esc(title)}</h1>` : ''}<div class="top-extra">${extra}</div></header>`;
@@ -293,7 +293,7 @@
     return `${top()}
       <main class="home">
         <a class="prematch" href="${last ? '#/vs/' + last.id : '#/'}" data-act="${last ? '' : 'focus-search'}">
-          ${last ? head(last.id, 40) : '<span>⚡</span>'}<span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
+          ${last ? head(last.id, 40) : '<img class="pm-bolt" src="icons/nav-bolt.png" alt="" width="40" height="40">'}<span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
         <nav class="tiles" aria-label="Sections">
           ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/kill', 'kill', '% de kill'], ['#/guide', 'fiches', 'Guide ' + mainNom()]]
             .map(([h, ic, l]) => `<a class="tile" href="${h}"><img src="icons/section-${ic}.png" alt="" width="56" height="56">${l}</a>`).join('')}
