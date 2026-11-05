@@ -47,7 +47,7 @@
       "difficulte": 8,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Vitesse extrême, choisit quand engager ; Bowser peine à le punir et à le coincer. (DashFight le classe pourtant favorable : MU débattu.)"
     },
     {
@@ -60,7 +60,7 @@
       "difficulte": 8,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Mobilité, kill confirms (flip), combos sur grosse cible ; punit chaque raté de Bowser."
     },
     {
@@ -70,7 +70,7 @@
       "difficulte": 8,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Pistolet + Arsène : zoning et combos amplifiés. Les données DashFight sont pourtant favorables à Bowser : MU débattu."
     },
     {
@@ -84,7 +84,7 @@
       "difficulte": 8,
       "cote": "?",
       "source_cote": "estimation",
-      "fiche": false,
+      "fiche": true,
       "justification": "Mythra : vitesse et combos ; Pyra : portée et kills. Couvre les deux faiblesses de Bowser."
     },
     {
@@ -96,7 +96,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée énorme, contrôle de l'espace ; Bowser doit traverser tout l'écran."
     },
     {
@@ -123,7 +123,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Gyro + laser : zoning solide ; récupération longue difficile à edgeguarder."
     },
     {
@@ -133,7 +133,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Mobilité aérienne, hitbox basse, waft qui tue tôt ; dur à attraper."
     },
     {
@@ -145,7 +145,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Banane + combos sur poids lourd ; contrôle du sol."
     },
     {
@@ -155,7 +155,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Lasers, combos up-air, edgeguard efficace sur la récupération de Bowser."
     },
     {
@@ -168,7 +168,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Vitesse et combos ravageurs sur les lourds."
     },
     {
@@ -180,7 +180,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Nair/up-air combos, mobilité, pression bouclier sûre."
     },
     {
@@ -192,7 +192,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Shurikens, vitesse, punitions rapides."
     },
     {
@@ -205,7 +205,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Zoning (missiles, charge shot), récupération longue."
     },
     {
@@ -217,7 +217,7 @@
       "difficulte": 7,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Canette, frisbee, gunmen : zoning lourd pour un grand perso."
     },
     {
@@ -227,7 +227,7 @@
       "difficulte": 6,
       "cote": "?",
       "source_cote": "estimation",
-      "fiche": false,
+      "fiche": true,
       "justification": "Combos aériens et récupération très longue ; léger donc Bowser le tue tôt s'il touche."
     },
     {
@@ -239,7 +239,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Pellets et metal blade : zoning permanent."
     },
     {
@@ -251,7 +251,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Projectiles + combos bombe."
     },
     {
@@ -263,7 +263,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Projectiles + combos nair."
     },
     {
@@ -273,7 +273,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Bombe, flèche, boomerang : zoning et setups."
     },
     {
@@ -283,7 +283,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Up-tilt/up-air combos sur grosse cible, cape qui renvoie le souffle."
     },
     {
@@ -293,7 +293,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Grab combos et zair ; mais récupération exploitable."
     },
     {
@@ -303,7 +303,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée d'épée constante, espacement sûr."
     },
     {
@@ -313,7 +313,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Bair kill, PK fire ; récupération punissable par Bowser."
     },
     {
@@ -323,7 +323,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée et Monado (vitesse/saut) ; espace bien Bowser."
     },
     {
@@ -333,7 +333,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Zoning (thoron, arcfire) ; Bowser doit approcher."
     },
     {
@@ -346,7 +346,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Mechakoopa + kart ; zone et combote."
     },
     {
@@ -358,7 +358,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Zoning selon le set."
     },
     {
@@ -371,7 +371,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Ptooie + poison : couvre l'espace."
     },
     {
@@ -387,7 +387,7 @@
       "difficulte": 6,
       "cote": "-1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Carapuce combote, Herbizarre zone ; Dracaufeu est en revanche jouable pour Bowser."
     },
     {
@@ -401,7 +401,7 @@
       "difficulte": 6,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Blocs, chariot, combos de ressources ; difficile à edgeguarder, bloque la récupération."
     },
     {
@@ -411,7 +411,7 @@
       "difficulte": 6,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Petit et rapide comme Pikachu, mais meurt très tôt."
     },
     {
@@ -421,7 +421,7 @@
       "difficulte": 5,
       "cote": "?",
       "source_cote": "estimation",
-      "fiche": false,
+      "fiche": true,
       "justification": "Punitions énormes, mais lent lui aussi ; MU de lecture."
     },
     {
@@ -433,7 +433,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée immense, mais léger : Bowser le tue tôt."
     },
     {
@@ -443,7 +443,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Grenades et C4 : contrôle de l'espace ; lourd lui aussi."
     },
     {
@@ -455,7 +455,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Fruits, borne : zoning et pièges."
     },
     {
@@ -465,7 +465,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Pikmin à longue portée ; mais récupération faible."
     },
     {
@@ -479,7 +479,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Projectiles et poche (qui peut capter le souffle de feu)."
     },
     {
@@ -492,7 +492,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Grabs dangereux ; séparer Nana donne l'avantage."
     },
     {
@@ -504,7 +504,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Vitesse et combos, mais léger et portée courte."
     },
     {
@@ -514,7 +514,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Vitesse, aiguilles, mais tue difficilement un lourd."
     },
     {
@@ -524,7 +524,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Laser qui fait flinch, bair ; récupération punissable."
     },
     {
@@ -536,7 +536,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Encre (dégâts accrus), roller ; léger."
     },
     {
@@ -549,7 +549,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Combos rapides sur lourd ; récupération très exploitable par Bowser."
     },
     {
@@ -559,7 +559,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Tipper kill tôt ; récupération edgeguardable."
     },
     {
@@ -569,7 +569,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Zair, PK freeze ; récupération exploitable."
     },
     {
@@ -582,7 +582,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Zoning (hache, croix, eau) ; récupération médiocre."
     },
     {
@@ -596,7 +596,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Luma couvre l'espace ; Harmonie meurt tôt sans Luma."
     },
     {
@@ -608,7 +608,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Combos aériens longs, mais légère."
     },
     {
@@ -620,7 +620,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Œufs, grenade, armure sur side-B."
     },
     {
@@ -633,7 +633,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Soleil et ballon : zoning."
     },
     {
@@ -646,7 +646,7 @@
       "difficulte": 5,
       "cote": "0",
       "source_cote": "estimation",
-      "fiche": false,
+      "fiche": true,
       "justification": "Miroir : celui qui contrôle le rebord et punit le mieux gagne."
     },
     {
@@ -656,7 +656,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Armure double saut, œufs ; mais Bowser le tue tôt."
     },
     {
@@ -666,7 +666,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Fantôme + Din ; lente au sol."
     },
     {
@@ -676,7 +676,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée et puissance ; récupération très punissable."
     },
     {
@@ -686,7 +686,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée longue, mais lent et récupération faible."
     },
     {
@@ -696,7 +696,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Combos et shoryu, mais récupération courte."
     },
     {
@@ -706,7 +706,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "GO! moves dangereux à haut %, récupération moyenne."
     },
     {
@@ -720,7 +720,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Aérienne, mais meurt extrêmement tôt contre Bowser."
     },
     {
@@ -733,7 +733,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Duel de poids lourds ; couronne et armure à respecter."
     },
     {
@@ -746,7 +746,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Gordo et portée ; lourd et lent lui aussi."
     },
     {
@@ -756,7 +756,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Grand comme Bowser : ses combos marchent moins bien."
     },
     {
@@ -768,7 +768,7 @@
       "difficulte": 4,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Dépend du set ; portée courte."
     },
     {
@@ -798,7 +798,7 @@
       "difficulte": 4,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Aura dangereuse à haut %, mais Bowser tue avant."
     },
     {
@@ -808,7 +808,7 @@
       "difficulte": 3,
       "cote": "0",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée courte, léger ; Bowser le domine au contact."
     },
     {
@@ -818,7 +818,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Grand et léger : cible idéale pour Bowser."
     },
     {
@@ -831,7 +831,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Polyvalent mais peu de kill power sur un lourd."
     },
     {
@@ -841,7 +841,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Portée mais lent ; punissable."
     },
     {
@@ -853,7 +853,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Cargo throw dangereux, mais grande cible et récupération horizontale."
     },
     {
@@ -865,7 +865,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Fort au contact, mais lent et récupération courte."
     },
     {
@@ -877,7 +877,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Aléatoire (menu), mais lent et récupération médiocre."
     },
     {
@@ -889,7 +889,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Peu de vitesse ; Bowser domine le sol."
     },
     {
@@ -899,7 +899,7 @@
       "difficulte": 3,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Shoryu dangereux, mais récupération très courte."
     },
     {
@@ -911,7 +911,7 @@
       "difficulte": 2,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Encore plus lent que Bowser, récupération faible."
     },
     {
@@ -923,7 +923,7 @@
       "difficulte": 2,
       "cote": "+1",
       "source_cote": "game8",
-      "fiche": false,
+      "fiche": true,
       "justification": "Récupération catastrophique : un passage offstage = une stock."
     },
     {

@@ -2,6 +2,48 @@
   "version": "2026.11.05",
   "drills": [
     {
+      "id": "routine-bowser",
+      "titre": "Routine Bowser : 10 minutes avant de jouer",
+      "description": "Échauffement quotidien en mode Entraînement, chaque étape est minutée (bip à la fin). Centré sur tes priorités : saisies, récupération, hors bouclier.",
+      "type": "routine",
+      "duree_s": 600,
+      "repetitions": 1,
+      "etapes_minutees": [
+        {
+          "t": 90,
+          "s": "Saut court + nair en chute rapide → up-tilt à l'atterrissage (des deux côtés)"
+        },
+        {
+          "t": 90,
+          "s": "Up-B hors bouclier : CPU qui attaque ton bouclier, réponds dès la fin du stun"
+        },
+        {
+          "t": 120,
+          "s": "Saisies : grab debout (frame 8), grab en course, grab pivot, puis side-B (Flying Slam) — 10 de chaque"
+        },
+        {
+          "t": 120,
+          "s": "Récupération : 5 retours différents (haut, rebord direct, double saut gardé, up-B tardif, esquive vers la scène)"
+        },
+        {
+          "t": 90,
+          "s": "Rebord : saut, roulade, attaque, lâcher + double saut, lâcher + bair — jamais deux fois la même"
+        },
+        {
+          "t": 90,
+          "s": "Edgeguard : CPU hors scène, bair puis souffle de feu au rebord"
+        }
+      ],
+      "etapes": [],
+      "matchups": [],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "https://ultimateframedata.com/bowser",
+        "timestamp": ""
+      }
+    },
+    {
       "id": "drill-oos",
       "titre": "Réflexe up-B hors bouclier",
       "description": "CPU niveau 9 ou ami : il attaque ton bouclier avec des aériens. Réponds uniquement par up-B OoS.",
@@ -25,6 +67,61 @@
         "type": "interne",
         "auteur": "PréMatch",
         "lien": "",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "drill-grab",
+      "titre": "Jeu de saisie de Bowser",
+      "description": "Ton grab debout sort frame 8, ton grab hors bouclier en 12 frames, et ton side-B passe le bouclier. Apprends à mélanger les trois.",
+      "type": "timer",
+      "duree_s": 120,
+      "repetitions": 4,
+      "etapes": [
+        "CPU qui bouclier : alterne grab debout et side-B (10 essais)",
+        "CPU qui attaque ton bouclier : grab hors bouclier (lâche pas le bouclier avant)",
+        "Grab pivot : dash dans un sens, retourne-toi et saisis (10 essais)",
+        "À haut % : back throw au bord, compte le % où ça tue sur Mario"
+      ],
+      "matchups": [
+        "incineroar",
+        "peach",
+        "fox",
+        "cloud"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "",
+        "timestamp": ""
+      }
+    },
+    {
+      "id": "drill-recovery-mix",
+      "titre": "Récupération : ne jamais revenir pareil",
+      "description": "Bowser revient mal si l'adversaire devine ton retour. Le but : 5 options, mélangées, sans gaspiller ton double saut.",
+      "type": "timer",
+      "duree_s": 180,
+      "repetitions": 3,
+      "etapes": [
+        "Haut : double saut tôt + esquive vers la scène",
+        "Rebord direct : up-B tardif, hitbox active quand il est collé",
+        "Bas : sous le rebord puis up-B (seulement si l'adversaire est loin)",
+        "Plateforme : vise la plateforme au lieu du rebord",
+        "Retarde ton double saut d'une seconde, puis choisis"
+      ],
+      "matchups": [
+        "pikachu",
+        "falco",
+        "gnw",
+        "marth",
+        "mario"
+      ],
+      "origine": {
+        "type": "interne",
+        "auteur": "PréMatch",
+        "lien": "https://www.youtube.com/watch?v=jMGl4V3gG2c",
+        "titre_video": "The Mind of Samsora and Tweek: Escaping Ledgetraps",
         "timestamp": ""
       }
     },

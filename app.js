@@ -93,7 +93,7 @@
 
   /* ---------- Rendu générique ---------- */
   const nav = active => `<nav class="bottom" aria-label="Navigation">
-    ${[['home', '#/', '⌂'], ['drills', '#/drills', '⏱'], ['flash', '#/flash', '⧉'], ['admin', '#/admin', '✎'], ['settings', '#/reglages', '⚙']]
+    ${[['home', '#/', '⌂'], ['drills', '#/drills', '⏱'], ['flash', '#/flash', '⧉'], ['journal', '#/journal', '✍'], ['settings', '#/reglages', '⚙']]
       .map(([k, href, ic]) => `<a href="${href}" class="${active === k ? 'on' : ''}"><span aria-hidden="true">${ic}</span>${T('nav_' + k)}</a>`).join('')}</nav>`;
   const top = (title, backHref, extra = '') => `<header class="top">
     ${backHref ? `<a class="icon-btn" href="${backHref}" aria-label="${T('back')}">‹</a>` : `<div class="brand">${T('app')} <span>${T('sub')}</span></div>`}
@@ -187,7 +187,11 @@
       <main class="home">
         <a class="prematch" href="${last ? '#/vs/' + last.id : '#/'}" data-act="${last ? '' : 'focus-search'}">
           <span>⚡</span><span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
-        <a class="mine" href="#/vs/bowser">🐢 Mes coups : Bowser en images (hitbox)</a>
+        <nav class="tiles" aria-label="Sections">
+          ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/vs/bowser', 'fiches', 'Mes coups']]
+            .map(([h, ic, l]) => `<a class="tile" href="${h}"><img src="icons/section-${ic}.png" alt="" width="56" height="56">${l}</a>`).join('')}
+        </nav>
+        ${journalBanner()}
         <label class="search"><span class="sr">${T('search')}</span>
           <input id="q" type="search" autocomplete="off" enterkeyhint="go" placeholder="${T('search')}"></label>
         ${prefs.favs.length ? `<h2>${T('favorites')}</h2><div class="chips">${chips(prefs.favs)}</div>` : ''}
@@ -245,6 +249,7 @@
     return `${top(f.nom, '#/', favBtn)}
       <main class="fiche">
         <div class="fiche-head">${meter(f.difficulte)}<button class="btn quick" data-act="quick">💡 ${T('quick')}</button></div>
+        ${recordLine(id)}
         <section><h2>${T('win')}</h2><ul class="win">${(f.win_conditions || []).slice(0, 4).map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>
         ${carousel(f.medias || [])}
         <details class="sec" data-sec="combos" ${prefs.combosOpen ? 'open' : ''}><summary><h2>${T('combos')} <small>(${combos.length})</small></h2></summary>
@@ -253,16 +258,18 @@
         ${(f.setups || []).length ? `<details class="sec"><summary><h2>${T('setups')}</h2></summary>${f.setups.map(s => `<div class="setup"><b>${esc(s.titre)}</b><p><span class="lbl">${T('reco')}</span> ${esc(s.reconnaitre)}</p><p><span class="lbl ok">${T('answer')}</span> ${esc(s.reponse)}</p></div>`).join('')}</details>` : ''}
         ${movesSection(id, false, 'Tous ses coups en images')}
         <section><h2>${T('tips')}</h2><ol class="tips">${(f.conseils_bowser || []).map(x => `<li>${esc(x)}</li>`).join('')}</ol></section>
+        ${f.stage ? `<p class="stage">🗺 <b>Stage à proposer :</b> ${esc(f.stage)}</p>` : ''}
+        ${planSection(id)}
         <p class="src muted">Cote : ${esc(m.source_cote)} (${esc(m.cote)}) · ${DATA.edited.has(id) ? 'éditée localement' : 'contenu d’origine ' + esc(BASE.fiches.version)}</p>
       </main>
       <div class="overlay" id="quick" hidden role="dialog" aria-modal="true" aria-label="${T('quick')}">
-        <div class="overlay-card"><p class="big">${esc(f.conseil_rapide)}</p>
+        <div class="overlay-card"><p class="big">${esc(f.conseil_rapide)}</p>${planOverlay(id)}
           <ol>${(f.conseils_bowser || []).map(x => `<li>${esc(x)}</li>`).join('')}</ol>
           <button class="btn" data-act="quick-close">${T('close')}</button></div></div>
       ${nav('')}`;
   }
   function afterFiche() {
-    hydrateMedia(app);
+    hydrateMedia(app); fillPlan();
     const sec = $('details[data-sec="combos"]');
     if (sec) sec.addEventListener('toggle', () => { prefs.combosOpen = sec.open; savePrefs(); });
     wakeOn();
@@ -273,6 +280,108 @@
     return `${top(c.titre, '#/vs/' + fid)}<main class="fiche"><p class="muted">${esc(f.nom)} · ${goalTag(c.but)}</p>${comboBody(f, c, true)}</main>${nav('')}`;
   }
   const viewNotFound = () => `${top('—', '#/')}<main><p class="empty">${T('no_result')}</p></main>${nav('')}`;
+
+  /* ---------- Journal de matchs ---------- */
+  const CAUSES = [
+    ['grab', 'Grabs ratés ou punis', 'drill-grab'], ['recovery', 'Récupération / retour sur scène', 'drill-recovery-mix'],
+    ['jongle', 'Jongles / désavantage', 'poppt-zackray'], ['edgeguard', 'Edgeguard subi', 'drill-recovery'],
+    ['zoning', 'Zoning / projectiles', 'poppt-projectiles'], ['bouclier', 'Pression sur mon bouclier', 'drill-oos'],
+    ['lecture', 'Mauvaises lectures / options répétées', 'poppt-bait'], ['kill', 'Kill raté ou trop tard', 'drill-edgeguard'],
+    ['mental', 'Nerfs / tilt', 'poppt-plan']];
+  let JOURNAL = [];
+  async function loadJournal() { try { JOURNAL = (await S.get('kv', 'journal')) || []; } catch (e) { JOURNAL = []; } }
+  const saveJournal = () => S.put('kv', 'journal', JOURNAL);
+  function recordOf(id) { const ms = JOURNAL.filter(j => j.vs === id); return { v: ms.filter(j => j.res === 'V').length, d: ms.filter(j => j.res === 'D').length }; }
+  function recordLine(id) {
+    const r = recordOf(id); const n = r.v + r.d;
+    return `<p class="record">${n ? `Ton bilan : <b class="win-c">${r.v} V</b> – <b class="loss-c">${r.d} D</b> (${Math.round(100 * r.v / n)} %)` : 'Aucun match noté contre lui.'} <a href="#/journal?vs=${id}">＋ Noter un match</a></p>`;
+  }
+  function topCauses(list) {
+    const c = {}; list.filter(j => j.res === 'D').forEach(j => (j.causes || []).forEach(k => { c[k] = (c[k] || 0) + 1; }));
+    return Object.entries(c).sort((a, b) => b[1] - a[1]);
+  }
+  function journalBanner() {
+    if (!JOURNAL.length) return `<a class="mine" href="#/journal">✍ Note tes matchs : l'app te dira quoi travailler en priorité.</a>`;
+    const tc = topCauses(JOURNAL.slice(0, 30))[0]; const cause = tc && CAUSES.find(c => c[0] === tc[0]);
+    return cause ? `<a class="mine" href="#/drill/${cause[2]}">🎯 À travailler en priorité : <b>${esc(cause[1])}</b> (${tc[1]} défaite${tc[1] > 1 ? 's' : ''} récente${tc[1] > 1 ? 's' : ''}) → drill</a>` : '';
+  }
+  function viewJournal(params) {
+    const vs = params.get('vs') || prefs.recents[0] || '';
+    const tot = { v: JOURNAL.filter(j => j.res === 'V').length, d: JOURNAL.filter(j => j.res === 'D').length };
+    const per = {}; JOURNAL.forEach(j => { per[j.vs] = per[j.vs] || { v: 0, d: 0 }; per[j.vs][j.res === 'V' ? 'v' : 'd']++; });
+    const rows = Object.entries(per).sort((a, b) => (b[1].v + b[1].d) - (a[1].v + a[1].d));
+    const tc = topCauses(JOURNAL);
+    const maxC = tc.length ? tc[0][1] : 1;
+    return `${top('Journal de matchs', '')}<main class="journal">
+      <form id="j-form" class="form">
+        <div class="grid2"><label>Adversaire<select name="vs">${DATA.matchups.map(m => `<option value="${m.id}" ${m.id === vs ? 'selected' : ''}>${esc(m.nom)}</option>`).join('')}</select></label>
+          <label>Stage<select name="stage">${['', 'Battlefield', 'Small Battlefield', 'Final Destination', 'Pokémon Stadium 2', 'Smashville', 'Town and City', 'Hollow Bastion', 'Kalos', 'Autre'].map(x => `<option>${x}</option>`).join('')}</select></label></div>
+        <div class="seg" role="radiogroup" aria-label="Résultat"><label><input type="radio" name="res" value="V" required> Victoire</label><label><input type="radio" name="res" value="D"> Défaite</label></div>
+        <fieldset><legend>Qu'est-ce qui a coûté des stocks ?</legend><div class="chips">${CAUSES.map(([k, l]) => `<label class="chip sm check-chip"><input type="checkbox" name="causes" value="${k}"> ${esc(l)}</label>`).join('')}</div></fieldset>
+        <label>Note (ce que tu feras différemment)<textarea name="note" rows="2" placeholder="ex. arrêter le side-B au centre, il le lisait"></textarea></label>
+        <button class="btn" type="submit">Enregistrer le match</button>
+      </form>
+      <h2>Bilan</h2>
+      ${JOURNAL.length ? `<p class="big-stat"><b class="win-c">${tot.v} V</b> – <b class="loss-c">${tot.d} D</b> · ${Math.round(100 * tot.v / (tot.v + tot.d))} % de victoires sur ${JOURNAL.length} matchs</p>
+        ${tc.length ? `<h2>Ce qui te coûte le plus de défaites</h2><div class="bars">${tc.map(([k, n]) => { const c = CAUSES.find(x => x[0] === k); return `<a class="bar" href="#/drill/${c[2]}"><span class="bar-l">${esc(c[1])}</span><span class="bar-t"><i style="width:${Math.round(100 * n / maxC)}%"></i></span><span class="bar-n">${n}</span></a>`; }).join('')}</div><p class="muted">Touche une cause pour ouvrir le drill correspondant.</p>` : ''}
+        <h2>Par adversaire</h2><div class="list">${rows.map(([id, r]) => { const m = DATA.byId[id] || { nom: id, difficulte: 5 }; const n = r.v + r.d; return `<a class="mu" href="#/vs/${id}"><span class="pill ${dClass(m.difficulte)}">${Math.round(100 * r.v / n)}%</span><span class="mu-name">${esc(m.nom)}</span><small>${r.v} V – ${r.d} D</small></a>`; }).join('')}</div>
+        <h2>Derniers matchs</h2><div class="list">${JOURNAL.slice(0, 15).map((j, i) => { const m = DATA.byId[j.vs] || { nom: j.vs }; return `<div class="jrow"><b class="${j.res === 'V' ? 'win-c' : 'loss-c'}">${j.res}</b> ${esc(m.nom)}${j.stage ? ' · ' + esc(j.stage) : ''} <small>${new Date(j.at).toLocaleDateString('fr-CH')}${(j.causes || []).length ? ' · ' + j.causes.map(k => (CAUSES.find(c => c[0] === k) || [])[1]).filter(Boolean).map(esc).join(', ') : ''}${j.note ? ' · « ' + esc(j.note) + ' »' : ''}</small><button class="icon-btn sm" data-act="j-del" data-i="${i}" aria-label="Supprimer">×</button></div>`; }).join('')}</div>`
+        : '<p class="muted">Aucun match pour l’instant. Note chaque set : après une dizaine de matchs, l’app te montre tes vraies faiblesses et le drill qui va avec.</p>'}
+    </main>${nav('journal')}`;
+  }
+  async function submitJournal(form) {
+    const fd = new FormData(form);
+    JOURNAL.unshift({ id: uid('m'), at: Date.now(), vs: fd.get('vs'), res: fd.get('res'), stage: fd.get('stage'), causes: fd.getAll('causes'), note: (fd.get('note') || '').trim() });
+    await saveJournal(); toast('Match enregistré'); route();
+  }
+
+  /* ---------- Plan de jeu par matchup (Poppt : How to Create a Game Plan) ---------- */
+  const PLANS = {};
+  function planSection(id) {
+    return `<details class="sec" data-sec="plan"><summary><h2>Mon plan de jeu</h2></summary>
+      <form class="form plan" data-plan="${id}">
+        <label>Mon objectif en neutre<input name="neutre" placeholder="ex. tenir le centre, ftilt sur ses approches"></label>
+        <label>Ma punition principale<input name="punition" placeholder="ex. up-B hors bouclier sur ses aériens"></label>
+        <label>Le piège à éviter<input name="piege" placeholder="ex. ne pas sauter dans son up-air"></label>
+        <button class="btn sm" type="submit">Enregistrer le plan</button>
+        <p class="muted">Méthode : <a href="https://www.youtube.com/watch?v=ij6H8XQ5Me8" target="_blank" rel="noopener">Poppt — How to Create a Game Plan ↗</a>. Le plan s'affiche aussi dans « Conseil rapide ».</p>
+      </form></details>`;
+  }
+  function planOverlay(id) { return `<div class="plan-ov" data-plan-ov="${id}"></div>`; }
+  async function fillPlan() {
+    const form = $('form[data-plan]'); if (!form) return;
+    const id = form.dataset.plan; let p = null; try { p = await S.get('kv', 'plan:' + id); } catch (e) { }
+    PLANS[id] = p;
+    if (p) { ['neutre', 'punition', 'piege'].forEach(k => { form.elements[k].value = p[k] || ''; }); }
+    const ov = $('[data-plan-ov]');
+    if (ov && p && (p.neutre || p.punition || p.piege)) ov.innerHTML = `<div class="plan-box"><b>Mon plan</b><ul>${p.neutre ? `<li>Neutre : ${esc(p.neutre)}</li>` : ''}${p.punition ? `<li>Punition : ${esc(p.punition)}</li>` : ''}${p.piege ? `<li>Éviter : ${esc(p.piege)}</li>` : ''}</ul></div>`;
+  }
+
+  /* ---------- Frame data Bowser (Ultimate Frame Data, relevé le 2026-11-05) ---------- */
+  const FRAMES = {
+    source: 'https://ultimateframedata.com/bowser',
+    stats: [['Poids', '135 (le plus lourd du jeu)'], ['Vitesse de course', '1,971'], ['Vitesse aérienne', '1,155'], ['Chute / chute rapide', '1,77 / 2,832'], ['Saut court / complet (frames)', '31 / 45']],
+    oos: [['Up-B (Whirling Fortress)', 6], ['Side-B en l’air (Flying Slam)', 9], ['Nair', 11], ['Grab hors bouclier', 12], ['Lâcher le bouclier (shield drop)', 11]],
+    moves: [ // [coup, démarrage, total, atterrissage, dégâts, sur bouclier]
+      ['Jab 1', '7', '25', '—', '4', '-13'], ['Ftilt', '10', '37', '—', '13', '-15'], ['Up-tilt', '11', '40', '—', '11', '-19'], ['Dtilt', '10/15', '45', '—', '7/8', '-22'],
+      ['Attaque en course', '11', '55', '—', '12/10', '-33'], ['Side-smash', '22', '69', '—', '23/20 (17/14)', '-32'], ['Up-smash', '16', '57', '—', '22/16/12', '-27'], ['Down-smash', '12', '72', '—', '16/15', '-49'],
+      ['Nair', '8', '47', '15', '6', '-12'], ['Fair', '11', '41', '14', '13/12/11', '-9'], ['Bair', '9', '44', '24', '19', '-17'], ['Up-air', '9', '44', '17', '15', '-12'], ['Dair', '17', '77', '34', '16', '-30'],
+      ['Side-B (Flying Slam)', '6', '52', '—', 'saisie', '—'], ['Up-B au sol', '6', '81', '18', '1 / 6', '-36'], ['Down-B (Bowser Bomb)', '11', '66', '—', '20/11', '—'],
+      ['Grab', '8', '40', '—', '—', '—'], ['Grab en course', '11', '48', '—', '—', '—'], ['Grab pivot', '12', '43', '—', '—', '—'],
+      ['Back throw', '—', '38', '—', '12', '—'], ['Forward throw', '—', '58', '—', '12', '—'], ['Up-throw', '—', '74', '—', '~10', '—'], ['Down-throw', '—', '84', '—', '14', '—']]
+  };
+  function viewFrames() {
+    return `${top('Frame data : Bowser', '')}<main class="frames">
+      <div class="explain"><b>Comment s'en servir</b><p>Un coup adverse qui laisse l'adversaire à <b>−6 ou pire</b> sur ton bouclier est punissable par ton <b>up-B hors bouclier (6 frames)</b>. À −12 ou pire, ton grab hors bouclier passe aussi. Ton up-B est l'une des meilleures options hors bouclier du jeu : c'est ta punition par défaut.</p></div>
+      <h2>Tes options hors bouclier</h2><div class="oos">${FRAMES.oos.map(([n, f]) => `<div class="oos-i"><span class="oos-f">${f}</span><span>${esc(n)}</span></div>`).join('')}</div>
+      <h2>Tes coups</h2><div class="table-wrap"><table><thead><tr><th>Coup</th><th>Démarrage</th><th>Total</th><th>Atterr.</th><th>Dégâts</th><th>Sur bouclier</th></tr></thead>
+        <tbody>${FRAMES.moves.map(r => `<tr>${r.map((c, i) => `<td class="${i === 5 && /^-/.test(c) ? (parseInt(c, 10) <= -15 ? 'unsafe' : 'meh') : ''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      <p class="muted">« Sur bouclier » = ton avantage quand le coup touche le bouclier adverse. Rouge = très punissable : ne le lance pas collé à un bouclier. Le fair (−9) et le nair (−12) espacés sont tes options les plus sûres.</p>
+      <h2>Caractéristiques</h2><dl class="stats">${FRAMES.stats.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      <p class="src">Source : <a href="${FRAMES.source}" target="_blank" rel="noopener">Ultimate Frame Data — Bowser</a></p>
+      ${movesSection('bowser', false, 'Hitbox de tes coups (SmashWiki)')}
+    </main>${nav('')}`;
+  }
 
   /* ---------- Écran : drills ---------- */
   function viewDrills() {
@@ -296,16 +405,23 @@
     return `${top(d.titre, '#/drills')}<main class="drill">
       <p>${esc(d.description || '')}</p>
       ${o.type === 'poppt' || o.lien ? `<p class="poppt"><b>Source :</b> ${esc(o.auteur || '')} ${o.lien ? `<a href="${esc(o.lien)}" target="_blank" rel="noopener">${esc(o.titre_video || 'vidéo')}${o.timestamp ? ' à ' + esc(o.timestamp) : ''} ↗</a>` : ''}</p>` : ''}
-      <div class="timer"><div class="clock" id="clock">${fmtTs(d.duree_s || 180)}</div>
-        <div class="rep" id="rep">${T('rep')} 1 / ${d.repetitions || 1}</div>
+      <div class="timer"><div class="clock" id="clock">${fmtTs(d.etapes_minutees ? d.etapes_minutees[0].t : (d.duree_s || 180))}</div>
+        <div class="rep" id="rep">${d.etapes_minutees ? `Étape 1 / ${d.etapes_minutees.length}` : `${T('rep')} 1 / ${d.repetitions || 1}`}</div>
         <div class="row"><button class="btn" data-act="t-start">${T('start')}</button><button class="btn ghost" data-act="t-pause">${T('pause')}</button><button class="btn ghost" data-act="t-reset">${T('reset')}</button></div></div>
-      <h2>${T('steps')}</h2><ul class="check">${(d.etapes || []).map((s, i) => `<li><label><input type="checkbox" data-step="${i}"> ${esc(s)}</label></li>`).join('')}</ul>
+      <h2>${T('steps')}</h2><ul class="check">${(d.etapes_minutees ? d.etapes_minutees.map(x => `${x.s} (${fmtTs(x.t)})`) : (d.etapes || [])).map((s, i) => `<li><label><input type="checkbox" data-step="${i}"> ${esc(s)}</label></li>`).join('')}</ul>
       ${(d.matchups || []).length ? `<p class="chips">${d.matchups.map(mid => DATA.byId[mid]).filter(Boolean).map(m => `<a class="chip ${dClass(m.difficulte)}" href="#/vs/${m.id}">${esc(m.nom)}</a>`).join('')}</p>` : ''}
     </main>${nav('drills')}`;
   }
   function afterDrill(id) {
     const d = DATA.drills.find(x => x.id === id); if (!d) return;
-    timer = { d, dur: (d.duree_s || 180) * 1000, left: (d.duree_s || 180) * 1000, rep: 1, run: false, last: 0, h: null };
+    const steps = d.etapes_minutees || null;
+    const dur = (steps ? steps[0].t : (d.duree_s || 180)) * 1000;
+    timer = { d, steps, dur, left: dur, rep: 1, run: false, last: 0, h: null };
+    if (steps) markStep();
+  }
+  function markStep() {
+    if (!timer || !timer.steps) return;
+    $$('.check li').forEach((li, i) => { li.classList.toggle('now', i === timer.rep - 1); const cb = $('input', li); if (cb && i < timer.rep - 1) cb.checked = true; });
   }
   function beep() {
     try { const ac = new (self.AudioContext || self.webkitAudioContext)(); const o = ac.createOscillator(); const g = ac.createGain(); o.connect(g); g.connect(ac.destination); o.frequency.value = 880; g.gain.value = 0.15; o.start(); o.stop(ac.currentTime + 0.35); } catch (e) { }
@@ -316,12 +432,13 @@
     const now = performance.now(); timer.left -= now - timer.last; timer.last = now;
     if (timer.left <= 0) {
       beep();
-      if (timer.rep < (timer.d.repetitions || 1)) { timer.rep++; timer.left = timer.dur; }
+      if (timer.steps && timer.rep < timer.steps.length) { timer.rep++; timer.dur = timer.steps[timer.rep - 1].t * 1000; timer.left = timer.dur; markStep(); }
+      else if (!timer.steps && timer.rep < (timer.d.repetitions || 1)) { timer.rep++; timer.left = timer.dur; }
       else { timer.run = false; timer.left = 0; prefs.drillLog = [{ id: timer.d.id, at: Date.now() }, ...prefs.drillLog].slice(0, 200); savePrefs(); toast(T('done')); }
     }
     const c = $('#clock'), r = $('#rep');
     if (c) c.textContent = fmtTs(timer.left / 1000);
-    if (r) r.textContent = `${T('rep')} ${timer.rep} / ${timer.d.repetitions || 1}`;
+    if (r) r.textContent = timer.steps ? `Étape ${timer.rep} / ${timer.steps.length}` : `${T('rep')} ${timer.rep} / ${timer.d.repetitions || 1}`;
     if (timer.run) timer.h = setTimeout(tick, 200);
   }
 
@@ -521,6 +638,7 @@
   function viewSettings() {
     const poppt = source('poppt1') || {};
     return `${top(T('settings'), '')}<main class="settings form">
+      <a class="mine" href="#/admin">✎ Administration : éditer les fiches, médias, veille, sauvegarde</a>
       <label>${T('lang')} ${sel('lang', Object.keys(PMI18n.LANGS), prefs.lang, l => PMI18n.LANGS[l])}</label>
       <label>${T('theme')} ${sel('theme', ['auto', 'light', 'dark'], prefs.theme, x => T('theme_' + x))}</label>
       <label class="inline"><input type="checkbox" name="wakelock" ${prefs.wakelock ? 'checked' : ''}> ${T('wakelock')}</label>
@@ -576,7 +694,8 @@
     const dump = {
       format: 'prematch-backup', version: 1, date: new Date().toISOString(),
       fiches: (await S.all('fiches')).map(r => r.value), drills: (await S.all('drills')).map(r => r.value),
-      sources: (await S.all('sources')).map(r => r.value), prefs, vault: null
+      sources: (await S.all('sources')).map(r => r.value), prefs, vault: null,
+      journal: JOURNAL, plans: (await S.all('kv')).filter(r => String(r.key).startsWith('plan:')).map(r => ({ id: r.key, ...r.value }))
     };
     if (await S.Vault.exists() && confirm('Inclure le coffre chiffré (reste chiffré, restaurable avec ta phrase secrète) ?')) dump.vault = await S.Vault.exportEncrypted();
     download(`prematch-sauvegarde-${new Date().toISOString().slice(0, 10)}.json`, dump);
@@ -587,6 +706,8 @@
     for (const f of dump.fiches || []) await S.put('fiches', f.id, f);
     for (const d of dump.drills || []) await S.put('drills', d.id, d);
     for (const s of dump.sources || []) await S.put('sources', s.id, s);
+    if (Array.isArray(dump.journal)) { const ids = new Set(JOURNAL.map(j => j.id)); JOURNAL = [...dump.journal.filter(j => !ids.has(j.id)), ...JOURNAL].sort((a, b) => b.at - a.at); await saveJournal(); }
+    for (const p of dump.plans || []) { const { id, ...rest } = p; await S.put('kv', id, rest); }
     if (dump.prefs) { prefs = { ...DEFAULTS, ...dump.prefs }; savePrefs(); applyTheme(); }
     if (dump.vault && confirm('Restaurer aussi le coffre chiffré ? (remplace la méta du coffre actuel)')) await S.Vault.importEncrypted(dump.vault);
     await loadLocal();
@@ -611,6 +732,9 @@
       case 'flash': html = viewFlash(params); after = () => { renderCard(false); $('#flash-filter').addEventListener('change', e => { location.hash = '#/flash' + (e.target.value ? '?vs=' + e.target.value : ''); }); }; break;
       case 'admin': html = p[1] ? viewAdminEdit(p[1]) : viewAdmin(); after = p[1] ? null : renderVeille; break;
       case 'reglages': html = viewSettings(); after = afterSettings; break;
+      case 'journal': html = viewJournal(params); break;
+      case 'frames': html = viewFrames(); after = () => hydrateMedia(app); break;
+      case 'routine': location.replace('#/drill/routine-bowser'); return;
       default: html = viewNotFound();
     }
     app.innerHTML = html;
@@ -646,8 +770,9 @@
         }
         case 't-start': if (timer && !timer.run) { if (timer.left <= 0) { timer.left = timer.dur; timer.rep = 1; } timer.run = true; timer.last = performance.now(); tick(); } break;
         case 't-pause': if (timer) { timer.run = false; clearTimeout(timer.h); } break;
-        case 't-reset': if (timer) { timer.run = false; clearTimeout(timer.h); timer.left = timer.dur; timer.rep = 1; tick(); $('#clock').textContent = fmtTs(timer.dur / 1000); $('#rep').textContent = `${T('rep')} 1 / ${timer.d.repetitions || 1}`; } break;
+        case 't-reset': if (timer) { timer.run = false; clearTimeout(timer.h); timer.rep = 1; timer.dur = (timer.steps ? timer.steps[0].t : (timer.d.duree_s || 180)) * 1000; timer.left = timer.dur; $('#clock').textContent = fmtTs(timer.dur / 1000); $('#rep').textContent = timer.steps ? `Étape 1 / ${timer.steps.length}` : `${T('rep')} 1 / ${timer.d.repetitions || 1}`; markStep(); } break;
         case 'hb': showMove(el); break;
+        case 'j-del': JOURNAL.splice(+el.dataset.i, 1); await saveJournal(); route(); break;
         case 'fc-reveal': renderCard(true); break;
         case 'fc-knew': case 'fc-again': {
           const c = deck[deckI]; prefs.flash[c.id] = act === 'fc-knew' ? Math.min(5, (prefs.flash[c.id] || 1) + 1) : 1; savePrefs();
@@ -722,6 +847,8 @@
     e.preventDefault();
     try {
       if (e.target.id === 'poppt-form') await submitPoppt(e.target);
+      if (e.target.id === 'j-form') await submitJournal(e.target);
+      if (e.target.dataset && e.target.dataset.plan) { const fd = new FormData(e.target); const p = { neutre: fd.get('neutre').trim(), punition: fd.get('punition').trim(), piege: fd.get('piege').trim() }; await S.put('kv', 'plan:' + e.target.dataset.plan, p); toast('Plan enregistré'); fillPlan(); }
       if (e.target.id === 'edit-form') { readForm(); await S.put('fiches', editing.id, editing); await loadLocal(); toast(T('saved')); location.hash = '#/vs/' + editing.id; }
     } catch (err) { console.error(err); toast(err.message || String(err)); }
   });
@@ -736,7 +863,7 @@
   window.addEventListener('hashchange', route);
   route();                                                              // rendu immédiat depuis le bundle
   performance.mark && performance.mark('prematch-first-render');
-  loadLocal().then(changed => { if (changed && !location.hash.startsWith('#/admin/')) route(); });
+  Promise.all([loadLocal(), loadJournal()]).then(([changed]) => { if ((changed || JOURNAL.length) && !location.hash.startsWith('#/admin/') && !location.hash.startsWith('#/drill/')) route(); });
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW :', err));
   self.PMApp = { get data() { return DATA; }, parseYouTube, parseTs, fmtTs };
 })();

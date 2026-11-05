@@ -16,7 +16,7 @@
       poppt_ref: 'Référence Poppt1', poppt_import: 'Importer cet exercice Poppt', to_link: 'à lier',
       stub: 'Fiche détaillée pas encore rédigée. La cote et la justification ci-dessus te donnent le plan de jeu de base.',
       stub_create: 'Rédiger cette fiche', reco: 'Reconnaître', answer: 'Réponse',
-      nav_home: 'Accueil', nav_drills: 'Drills', nav_flash: 'Révision', nav_admin: 'Admin', nav_settings: 'Réglages',
+      nav_home: 'Accueil', nav_drills: 'Drills', nav_flash: 'Révision', nav_admin: 'Admin', nav_journal: 'Journal', nav_settings: 'Réglages',
       drills: 'Drills', start: 'Démarrer', pause: 'Pause', reset: 'Réinitialiser', rep: 'Série', done: 'Terminé !',
       steps: 'Étapes', import_poppt: 'Importer un exercice Poppt', flash: 'Révision rapide', reveal: 'Voir la réponse',
       knew: 'Je savais', again: 'À revoir', flash_q: 'Que fais-tu ?', flash_empty: 'Aucune carte.',
@@ -39,7 +39,7 @@
       all: 'All matchups (hardest to easiest)', difficulty: 'Difficulty', win: 'How they win', combos: 'Key combos',
       setups: 'Situations to recognize', tips: 'Bowser tips', quick: 'Quick tip', close: 'Close', sources: 'Sources',
       inputs: 'Inputs', cond: 'Conditions', pos: 'Position', goal: 'Goal', variants: 'Variants', counters: 'Bowser counterplay',
-      detail: 'Details', back: 'Back', nav_home: 'Home', nav_drills: 'Drills', nav_flash: 'Review', nav_admin: 'Admin', nav_settings: 'Settings',
+      detail: 'Details', back: 'Back', nav_home: 'Home', nav_drills: 'Drills', nav_flash: 'Review', nav_admin: 'Admin', nav_journal: 'Log', nav_settings: 'Settings',
       start: 'Start', pause: 'Pause', reset: 'Reset', reveal: 'Show answer', knew: 'Knew it', again: 'Again', flash_q: 'What do you do?',
       save: 'Save', saved: 'Saved', del: 'Delete', add: 'Add', settings: 'Settings', lang: 'Language', theme: 'Theme',
       theme_auto: 'Auto', theme_light: 'Light', theme_dark: 'Tournament dark', open_link: 'Open source', no_result: 'No result'

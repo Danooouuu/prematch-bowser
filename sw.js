@@ -1,8 +1,9 @@
 /* Service worker : coquille de l'app + données en cache-first → ouverture instantanée et hors-ligne.
    Changer VERSION à chaque mise à jour du contenu (tools/build-bundle.mjs le fait automatiquement). */
-const VERSION = 'prematch-2026.11.05-mw3cb5tw';
+const VERSION = 'prematch-2026.11.05-mw3dofpr';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'i18n.js', 'store.js', 'schemas.js', 'data/bundle.js',
-  'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png',
+  'icons/section-fiches.png', 'icons/section-drills.png', 'icons/section-revision.png', 'icons/section-journal.png', 'icons/section-framedata.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
