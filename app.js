@@ -52,7 +52,7 @@
 
   /* ---------- Préférences (localStorage, jamais bloquant) ---------- */
   const PREF_KEY = 'prematch-prefs-v1';
-  const DEFAULTS = { lang: 'fr', notation: 'gc', theme: 'auto', wakelock: true, cacheMB: 150, vaultMB: 500, favs: ['pikachu', 'peach'], recents: [], combosOpen: true, flash: {}, drillLog: [] };
+  const DEFAULTS = { lang: 'fr', main: 'bowser', notation: 'gc', theme: 'auto', wakelock: true, cacheMB: 150, vaultMB: 500, favs: ['pikachu', 'peach'], recents: [], combosOpen: true, flash: {}, drillLog: [] };
   let prefs = (() => { try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(PREF_KEY) || '{}') }; } catch (e) { return { ...DEFAULTS }; } })();
   const savePrefs = () => { try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch (e) { /* stockage indisponible : l'app marche quand même */ } };
   function applyTheme() {
@@ -96,9 +96,59 @@
     ${[['home', '#/', '⌂'], ['drills', '#/drills', '⏱'], ['flash', '#/flash', '⧉'], ['journal', '#/journal', '✍'], ['settings', '#/reglages', '⚙']]
       .map(([k, href, ic]) => `<a href="${href}" class="${active === k ? 'on' : ''}"><span aria-hidden="true">${ic}</span>${T('nav_' + k)}</a>`).join('')}</nav>`;
   const top = (title, backHref, extra = '', headId = '') => `<header class="top">
-    ${backHref ? `<a class="icon-btn" href="${backHref}" aria-label="${T('back')}">‹</a>` : `<div class="brand">${T('app')} <span>${T('sub')}</span></div>`}
+    ${backHref ? `<a class="icon-btn" href="${backHref}" aria-label="${T('back')}">‹</a>` : `<div class="brand">${T('app')} <span>${esc(mainNom())}</span></div>`}
     ${backHref ? `${headId ? head(headId, 36) : ''}<h1>${esc(title)}</h1>` : ''}<div class="top-extra">${extra}</div></header>`;
   const meter = d => `<div class="meter ${dClass(d)}" role="img" aria-label="${T('difficulty')} ${d}/10">${Array.from({ length: 10 }, (_, i) => `<i class="${i < d ? 'on' : ''}"></i>`).join('')}<b>${d}/10</b></div>`;
+  /* ---------- Mon perso (multi-perso) ---------- */
+  const mainId = () => (prefs.main && DATA.byId[prefs.main]) ? prefs.main : 'bowser';
+  const mainNom = () => (DATA.byId[mainId()] || { nom: 'Bowser' }).nom.replace(' (miroir)', '');
+  /* ---------- Données de combat (chargées après le 1er rendu) ---------- */
+  let COMBAT_READY = !!self.PREMATCH_COMBAT;
+  function loadCombat() {
+    if (COMBAT_READY) return Promise.resolve(true);
+    if (!loadCombat.p) loadCombat.p = new Promise(res => { const sc = document.createElement('script'); sc.src = 'data/combat-data.js'; sc.onload = () => { COMBAT_READY = true; res(true); }; sc.onerror = () => res(false); document.head.appendChild(sc); });
+    return loadCombat.p;
+  }
+  /* Noms de coups (sources en anglais) → français court, notation des joueurs entre parenthèses */
+  const MV_FR = [[/^Neutral Air\b/, 'Aérien neutre (nair)'], [/^Forward Air\b/, 'Aérien avant (fair)'], [/^Back Air\b/, 'Aérien arrière (bair)'], [/^Up Air\b/, 'Aérien haut (uair)'], [/^Down Air\b/, 'Aérien bas (dair)'],
+    [/^Forward Smash\b/, 'Smash avant'], [/^Up Smash\b/, 'Smash haut'], [/^Down Smash\b/, 'Smash bas'], [/^Forward Tilt\b/, 'Tilt avant'], [/^Up Tilt\b/, 'Tilt haut'], [/^Down Tilt\b/, 'Tilt bas'],
+    [/^Dash Attack\b/, 'Attaque en course'], [/^Rapid Jab Finisher\b/, 'Fin de jab rapide'], [/^Jab\b/, 'Jab'], [/^Forward Throw\b/, 'Lancer avant'], [/^Back(ward)? Throw\b/, 'Lancer arrière'], [/^Up Throw\b/, 'Lancer haut'], [/^Down Throw\b/, 'Lancer bas'],
+    [/^Neutral B\b/, 'B neutre'], [/^Side B\b/, 'B côté'], [/^Up B\b/, 'B haut'], [/^Down B\b/, 'B bas'], [/^Dash Grab\b/, 'Saisie en course'], [/^Pivot Grab\b/, 'Saisie pivot'], [/^Grab\b/, 'Saisie'],
+    [/\(Air\)/, '(en l\u2019air)'], [/\bAir\b(?=[,)])/, 'en l\u2019air'], [/ or /, ' ou ']];
+  const mvFr = n => MV_FR.reduce((t, [re, v]) => t.replace(re, v), String(n));
+  const fr = n => n === null || n === undefined ? '—' : n + ' %';
+  const advCls = a => a <= -15 ? 'unsafe' : a <= -6 ? 'meh' : 'ok';
+  function koRows(atk, tgt, stage = 'Battlefield', limit = 6) {
+    const rows = PMCombat.killTable(atk, tgt, { stage, pos: 'centre' }, limit);
+    return rows.map(r => ({ ...r, edge: PMCombat.koPercent(r.mv, tgt, { stage, pos: 'bord' }) }));
+  }
+  const koTable = rows => rows.length ? `<div class="table-wrap"><table class="ko"><thead><tr><th>Coup</th><th>Sort</th><th>Centre</th><th>Bord</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(mvFr(r.name))}</td><td>${r.startup > 1 ? 'f' + r.startup : '—'}</td><td>${fr(r.ko)}</td><td>${fr(r.edge)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">Données d’éjection indisponibles pour ce perso.</p>';
+  async function fillCombat(root = app) {
+    const boxes = $$('[data-combat]', root); if (!boxes.length) return;
+    if (!(await loadCombat())) { boxes.forEach(b => { b.innerHTML = '<p class="muted">Données de combat indisponibles hors-ligne tant que l’app n’a pas été ouverte une fois avec du réseau.</p>'; }); return; }
+    const me = mainId(), meNom = mainNom();
+    boxes.forEach(b => {
+      const id = b.dataset.id; const nom = (DATA.byId[id] || { nom: id }).nom.replace(' (miroir)', '');
+      if (b.dataset.combat === 'fiche') {
+        const p = PMCombat.punishable(me, id);
+        const mine = koRows(me, id), theirs = koRows(id, me, 'Battlefield', 5);
+        const fast = PMCombat.fastestMoves(id, 5), oos = PMCombat.oosOptions(id);
+        const chipsAdv = (list, grab) => list.slice(0, 14).map(r => `<span class="chip sm adv-${advCls(r.adv)}">${esc(mvFr(r.name))} <b>${r.adv}</b>${grab && r.adv <= -grab.frames ? ' ✊' : ''}</span>`).join('');
+        b.innerHTML = `
+          <h4>🛡 Ce que tu peux punir hors bouclier</h4>
+          ${p ? `<p class="small">Ton option la plus rapide : <b>${esc(mvFr(p.fastest.name))}</b> (${p.fastest.frames} frames). Tout coup de ${esc(nom)} à <b>−${p.fastest.frames} ou pire</b> sur ton bouclier est punissable.</p>
+            <div class="chips">${chipsAdv(p.byFastest, p.grab) || '<span class="muted">Aucun coup relevé à ce niveau.</span>'}</div>
+            ${p.grab ? `<p class="muted small">✊ = aussi punissable par ta saisie hors bouclier (${p.grab.frames} frames) : la punition la plus sûre.</p>` : ''}
+            <p class="small">Sûrs sur ton bouclier (ne lance pas ton option dessus) :</p><div class="chips">${p.safe.slice(0, 8).map(r => `<span class="chip sm adv-ok">${esc(mvFr(r.name))} <b>${r.adv}</b></span>`).join('')}</div>` : '<p class="muted">Frame data indisponible.</p>'}
+          <h4>💀 Tes % de kill sur ${esc(nom)}</h4>${koTable(mine)}
+          <h4>⚠ Ses % de kill sur toi (${esc(meNom)})</h4>${koTable(theirs)}
+          <div class="sp-cols"><div><h4>Ses coups les plus rapides</h4><p class="small">${fast.map(f => `${esc(mvFr(f.name))} <b>f${f.startup}</b>`).join(' · ') || '—'}</p></div>
+            <div><h4>Ses options hors bouclier</h4><p class="small">${oos.map(o => `${esc(mvFr(o.name))} <b>${o.frames}f</b>`).join(' · ') || '—'}</p></div></div>
+          <p class="muted">Battlefield, 1 contre 1, DI de survie, sans rage ni coups usés : valeurs indicatives. <a href="#/kill?vs=${id}">Calculateur complet ›</a></p>
+          <p class="src">Frame data : Ultimate Frame Data · éjection : rubendal/SSBU-Calculator (MIT) · stages : données LVD du jeu.</p>`;
+      }
+    });
+  }
   const goalTag = g => `<span class="goal g-${esc(g)}">${T('goal_' + g)}</span>`;
   /* Icône de tête (SmashWiki) avec repli sur les initiales si l'image ne charge pas */
   const HEADS = BASE.heads || { perso: {} };
@@ -245,7 +295,7 @@
         <a class="prematch" href="${last ? '#/vs/' + last.id : '#/'}" data-act="${last ? '' : 'focus-search'}">
           ${last ? head(last.id, 40) : '<span>⚡</span>'}<span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
         <nav class="tiles" aria-label="Sections">
-          ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/guide', 'fiches', 'Guide Bowser']]
+          ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/kill', 'kill', '% de kill'], ['#/guide', 'fiches', 'Guide ' + mainNom()]]
             .map(([h, ic, l]) => `<a class="tile" href="${h}"><img src="icons/section-${ic}.png" alt="" width="56" height="56">${l}</a>`).join('')}
         </nav>
         ${journalBanner()}
@@ -278,7 +328,7 @@
         <div><dt>${T('pos')}</dt><dd>${esc(c.conditions && c.conditions.position)}</dd></div>
         <div><dt>${T('di')}</dt><dd>${esc(c.conditions && c.conditions.di)}</dd></div>
       </dl>
-      <div class="counter"><h4>🛡 ${T('counters')}</h4><ul>${(c.contre_mesures || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="counter"><h4>🛡 ${T('counters')}${mainId() !== 'bowser' ? ' (Bowser)' : ''}</h4><ul>${(c.contre_mesures || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
       ${(c.variantes || []).length ? `<h4>${T('variants')}</h4><ul class="small">${c.variantes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       ${full ? carousel((c.medias || []).map(id => (f.medias || []).find(m => m.id === id)).filter(Boolean)) : ''}
       ${ref ? `<div class="poppt"><b>📺 ${T('poppt_ref')}</b>
@@ -300,11 +350,12 @@
       return `${top(m.nom, '#/', favBtn, id)}<main class="fiche">${meter(m.difficulte)}
         <p class="lead">${esc(m.justification)}</p><p class="muted">${T('stub')}</p>
         <a class="btn" href="#/admin/${id}">✎ ${T('stub_create')}</a>
+        <details class="sec combat" open><summary><h2>Combat : ${esc(mainNom())} contre ${esc(m.nom)}</h2></summary><div data-combat="fiche" data-id="${id}"><p class="muted">Calcul…</p></div></details>
         ${spSection(id, true)}${movesSection(id, true, id === 'bowser' ? 'Coups de Bowser en images' : 'Ses coups en images')}</main>${nav('')}`;
     }
     const combos = f.combos || [];
     return `${top(f.nom, '#/', favBtn, id)}
-      <main class="fiche">${SP_BOWSER[id] ? `<p class="sp-line sp-${SP_BOWSER[id][0]}">SmashPro.tips classe ce matchup pour Bowser : <b>${esc(SP_BOWSER[id][1])}</b></p>` : ''}
+      <main class="fiche">${mainId() !== 'bowser' ? `<p class="sp-line">Contre-mesures et conseils écrits pour Bowser. La section « Combat » est calculée pour <b>${esc(mainNom())}</b>.</p>` : ''}${SP_BOWSER[id] && mainId() === 'bowser' ? `<p class="sp-line sp-${SP_BOWSER[id][0]}">SmashPro.tips classe ce matchup pour Bowser : <b>${esc(SP_BOWSER[id][1])}</b></p>` : ''}
         <div class="fiche-head">${meter(f.difficulte)}<button class="btn quick" data-act="quick">💡 ${T('quick')}</button></div>
         ${recordLine(id)}
         <section><h2>${T('win')}</h2><ul class="win">${(f.win_conditions || []).slice(0, 4).map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>
@@ -312,12 +363,14 @@
         <details class="sec" data-sec="combos" ${prefs.combosOpen ? 'open' : ''}><summary><h2>${T('combos')} <small>(${combos.length})</small></h2></summary>
           ${combos.map(c => `<details class="combo"><summary><span class="ct">${esc(c.titre)}</span>${goalTag(c.but)}<span class="cp">${esc((c.conditions && c.conditions.pourcent || '').split('(')[0])}</span></summary>${comboBody(f, c, false)}</details>`).join('')}
         </details>
+        <details class="sec combat" open><summary><h2>Combat : ${esc(mainNom())} contre ${esc(f.nom)}</h2></summary><div data-combat="fiche" data-id="${id}"><p class="muted">Calcul…</p></div></details>
         ${(f.setups || []).length ? `<details class="sec"><summary><h2>${T('setups')}</h2></summary>${f.setups.map(s => `<div class="setup"><b>${esc(s.titre)}</b><p><span class="lbl">${T('reco')}</span> ${esc(s.reconnaitre)}</p><p><span class="lbl ok">${T('answer')}</span> ${esc(s.reponse)}</p></div>`).join('')}</details>` : ''}
         ${spSection(id, false)}
         ${movesSection(id, false, 'Tous ses coups en images')}
         <section><h2>${T('tips')}</h2><ol class="tips">${(f.conseils_bowser || []).map(x => `<li>${esc(x)}</li>`).join('')}</ol></section>
         ${f.stage ? `<p class="stage">🗺 <b>Stage à proposer :</b> ${esc(f.stage)}</p>` : ''}
         ${planSection(id)}
+        <p class="row wrap"><button class="btn ghost sm" data-act="dl" data-set="one" data-id="${id}">📥 Rendre cette fiche dispo hors-ligne</button><span class="muted small" data-dl-prog></span></p>
         <p class="src muted">Cote : ${esc(m.source_cote)} (${esc(m.cote)}) · ${DATA.edited.has(id) ? 'éditée localement' : 'contenu d’origine ' + esc(BASE.fiches.version)}</p>
       </main>
       <div class="overlay" id="quick" hidden role="dialog" aria-modal="true" aria-label="${T('quick')}">
@@ -327,6 +380,7 @@
       ${nav('')}`;
   }
   function afterFiche() {
+    fillCombat();
     hydrateMedia(app); fillPlan();
     const sec = $('details[data-sec="combos"]');
     if (sec) sec.addEventListener('toggle', () => { prefs.combosOpen = sec.open; savePrefs(); });
@@ -428,6 +482,60 @@
       ['Grab', '8', '40', '—', '—', '—'], ['Grab en course', '11', '48', '—', '—', '—'], ['Grab pivot', '12', '43', '—', '—', '—'],
       ['Back throw', '—', '38', '—', '12', '—'], ['Forward throw', '—', '58', '—', '12', '—'], ['Up-throw', '—', '74', '—', '~10', '—'], ['Down-throw', '—', '84', '—', '14', '—']]
   };
+  function viewKill(params) {
+    const atk = params.get('atk') || mainId(), tgt = params.get('vs') || prefs.recents[0] || 'mario';
+    const opt = (n, v) => `<option value="${n}" ${n === v ? 'selected' : ''}>${esc((DATA.byId[n] || { nom: n }).nom.replace(' (miroir)', ''))}</option>`;
+    return `${top('Calculateur de % de kill', '')}<main class="killcalc form">
+      <div class="grid2"><label>Attaquant<select id="k-atk">${DATA.matchups.map(m => opt(m.id, atk)).join('')}</select></label>
+        <label>Cible<select id="k-tgt">${DATA.matchups.map(m => opt(m.id, tgt)).join('')}</select></label></div>
+      <div class="grid2"><label>Stage<select id="k-stage">${['Battlefield', 'Small Battlefield', 'Final Destination', 'Pokémon Stadium 2', 'Smashville', 'Town & City', 'Hollow Bastion', 'Kalos Pokémon League'].map(x => `<option>${x}</option>`).join('')}</select></label>
+        <label>Position de la cible<select id="k-pos"><option value="centre">Centre</option><option value="bord">Au bord</option></select></label></div>
+      <div class="grid2"><label>% de l’attaquant (rage) <output id="k-rv">0</output><input type="range" id="k-rage" min="0" max="150" value="0"></label>
+        <label class="inline"><input type="checkbox" id="k-di" checked> DI de survie</label></div>
+      <div id="k-out"><p class="muted">Calcul…</p></div>
+      <p class="muted">Méthode : formule d’éjection d’Ultimate (bonus 1 contre 1), sakurai au sol, décroissance de 0,051/frame, gravité et vitesse de chute de la cible, zones de mort du stage. Pas de coups usés ni de multi-hits enchaînés : prends ±5 % de marge.</p>
+      <p class="src">Données : rubendal/SSBU-Calculator (MIT), Ultimate Frame Data.</p>
+    </main>${nav('')}`;
+  }
+  async function afterKill() {
+    const out = $('#k-out');
+    if (!(await loadCombat())) { out.innerHTML = '<p class="muted">Données indisponibles hors-ligne.</p>'; return; }
+    const calc = () => {
+      const atk = $('#k-atk').value, tgt = $('#k-tgt').value, stage = $('#k-stage').value, pos = $('#k-pos').value, di = $('#k-di').checked;
+      const ragePct = +$('#k-rage').value; $('#k-rv').textContent = ragePct + ' %';
+      const rage = 1 + Math.min(Math.max(ragePct - 35, 0), 115) / 115 * 0.1;
+      const rows = PMCombat.killTable(atk, tgt, { stage, pos, di, rage }, 30);
+      out.innerHTML = rows.length ? `<div class="table-wrap"><table class="ko"><thead><tr><th>Coup</th><th>Sort</th><th>Dégâts</th><th>Tue dès</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(mvFr(r.name))}</td><td>${r.startup > 1 ? 'f' + r.startup : '—'}</td><td>${r.dmg}</td><td><b>${r.ko} %</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">Aucune donnée d’éjection pour cet attaquant (Kazuya et Sora ne sont pas couverts par la source).</p>';
+    };
+    $$('.killcalc select, .killcalc input').forEach(el => el.addEventListener('input', calc));
+    calc();
+  }
+  function viewFramesGeneric() {
+    return `${top('Frame data : ' + mainNom(), '')}<main class="frames"><div data-frames="${mainId()}"><p class="muted">Chargement…</p></div>${movesSection(mainId(), false, 'Hitbox de tes coups (SmashWiki)')}</main>${nav('')}`;
+  }
+  async function fillFrames() {
+    const box = $('[data-frames]'); if (!box || !(await loadCombat())) return;
+    const id = box.dataset.frames, u = self.PREMATCH_COMBAT.ufd[id];
+    if (!u) { box.innerHTML = '<p class="muted">Pas de frame data pour ce perso.</p>'; return; }
+    box.innerHTML = `<div class="explain"><b>Comment s’en servir</b><p>Ton option hors bouclier la plus rapide fixe ce que tu peux punir : un coup adverse à −N ou pire sur ton bouclier (N = frames de l’option) est punissable. Chaque fiche adverse fait le calcul pour toi.</p></div>
+      <h2>Tes options hors bouclier</h2><div class="oos">${PMCombat.oosOptions(id).map(o => `<div class="oos-i"><span class="oos-f">${o.frames}</span><span>${esc(mvFr(o.name))}</span></div>`).join('')}</div>
+      <h2>Tes coups</h2><div class="table-wrap"><table><thead><tr><th>Coup</th><th>Démarrage</th><th>Total</th><th>Actif</th><th>Sur bouclier</th></tr></thead><tbody>${u.moves.map(([n, st, adv, tot, act]) => { const a = parseInt(adv, 10); return `<tr><td>${esc(mvFr(n))}</td><td>${esc(st)}</td><td>${esc(tot)}</td><td>${esc(act)}</td><td class="${isNaN(a) ? '' : a <= -15 ? 'unsafe' : a <= -6 ? 'meh' : ''}">${esc(adv)}</td></tr>`; }).join('')}</tbody></table></div>
+      <p class="src">Source : Ultimate Frame Data.</p>`;
+  }
+  function viewGuideGeneric() {
+    const id = mainId();
+    return `${top('Guide ' + mainNom(), '', '', id)}<main class="guide">
+      <div class="guide-head">${head(id, 64)}<div><h1>${esc(mainNom())}</h1><p class="muted">Profil SmashPro.tips, options hors bouclier et % de kill de référence.</p></div></div>
+      ${spSection(id, true)}
+      <h2>Tes % de kill sur Mario (référence, Battlefield)</h2><div data-guidekill="${id}"><p class="muted">Calcul…</p></div>
+      <h2>Ta manette GameCube</h2><div class="gc-ref">${K('A')} Attaque · ${K('B')} Spécial · ${K('X')}/${K('Y')} Saut · ${K('Z')} Saisie · ${K('R')}/${K('L')} Bouclier · ${CS('')} Smash</div>
+      <p><a class="btn ghost" href="#/frames">Frame data</a> <a class="btn ghost" href="#/kill">Calculateur de kill</a> <a class="btn ghost" href="#/vs/${id}">Toutes tes hitbox</a></p>
+    </main>${nav('')}`;
+  }
+  async function fillGuideKill() {
+    const b = $('[data-guidekill]'); if (!b || !(await loadCombat())) return;
+    b.innerHTML = koTable(koRows(b.dataset.guidekill, 'mario', 'Battlefield', 8));
+  }
   function viewFrames() {
     return `${top('Frame data : Bowser', '')}<main class="frames">
       <div class="explain"><b>Comment s'en servir</b><p>Un coup adverse qui laisse l'adversaire à <b>−6 ou pire</b> sur ton bouclier est punissable par ton <b>up-B hors bouclier (6 frames)</b>. À −12 ou pire, ton grab hors bouclier passe aussi. Ton up-B est l'une des meilleures options hors bouclier du jeu : c'est ta punition par défaut.</p></div>
@@ -439,6 +547,30 @@
       <p class="src">Source : <a href="${FRAMES.source}" target="_blank" rel="noopener">Ultimate Frame Data — Bowser</a></p>
       ${movesSection('bowser', false, 'Hitbox de tes coups (SmashWiki)')}
     </main>${nav('')}`;
+  }
+
+  /* ---------- Hors-ligne : images SmashWiki / YouTube dans Cache Storage (servies par le service worker) ---------- */
+  function mediaUrls(set, id) {
+    const HBx = BASE.hitboxes || { perso: {} }, urls = new Set();
+    const gal = cid => ((HBx.perso[cid] || {}).moves || []).forEach(m => urls.add(HBx.base + m[2]));
+    const fiche = cid => ((DATA.fiches[cid] || {}).medias || []).forEach(m => { if (m.type === 'gif') urls.add(m.url); if (m.type === 'youtube') urls.add(`https://i.ytimg.com/vi/${m.video_id}/hqdefault.jpg`); });
+    if (set === 'heads') Object.values(HEADS.perso).forEach(p => urls.add(HEADS.base + p));
+    if (set === 'main') gal(mainId());
+    if (set === 'one') { gal(id); fiche(id); urls.add(HEADS.base + HEADS.perso[id]); }
+    if (set === 'favs') prefs.favs.forEach(cid => { gal(cid); fiche(cid); });
+    if (set === 'fiches') Object.keys(DATA.fiches).forEach(fiche);
+    if (set === 'all') { Object.keys(HBx.perso).forEach(gal); Object.keys(DATA.fiches).forEach(fiche); Object.values(HEADS.perso).forEach(p => urls.add(HEADS.base + p)); }
+    return [...urls];
+  }
+  async function downloadSet(set, id) {
+    if (!('caches' in self)) { toast('Hors-ligne non disponible dans ce navigateur'); return; }
+    const urls = mediaUrls(set, id); const cache = await caches.open('prematch-media');
+    let done = 0, bytes = 0, fail = 0; const prog = $('#dl-prog') || $('[data-dl-prog]');
+    const todo = []; for (const u of urls) { if (!(await cache.match(u))) todo.push(u); else done++; }
+    const step = async u => { try { const r = await fetch(u, { mode: 'cors' }); if (!r.ok) throw 0; const b = await r.clone().blob(); bytes += b.size; await cache.put(u, r); } catch (e) { fail++; } done++; if (prog) prog.textContent = `${done} / ${urls.length} images · ${(bytes / MB).toFixed(1)} Mo${fail ? ' · ' + fail + ' échecs' : ''}`; };
+    for (let i = 0; i < todo.length; i += 6) await Promise.all(todo.slice(i, i + 6).map(step));
+    toast(`Hors-ligne : ${urls.length - fail} / ${urls.length} images prêtes`);
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { });
   }
 
   /* ---------- Guide Bowser (rédigé d'après SmashPro.tips, frame data UFD, hitbox SmashWiki) ---------- */
@@ -744,6 +876,8 @@
     const poppt = source('poppt1') || {};
     return `${top(T('settings'), '')}<main class="settings form">
       <a class="mine" href="#/admin">✎ Administration : éditer les fiches, médias, veille, sauvegarde</a>
+      <label>Mon perso <select name="main">${DATA.matchups.map(m => `<option value="${m.id}" ${m.id === mainId() ? 'selected' : ''}>${esc(m.nom.replace(' (miroir)', ''))}</option>`).join('')}</select></label>
+      <p class="muted">Change le perso que tu joues : punitions, % de kill, frame data et guide s’adaptent. Les contre-mesures écrites des fiches restent celles de Bowser.</p>
       <label>${T('lang')} ${sel('lang', Object.keys(PMI18n.LANGS), prefs.lang, l => PMI18n.LANGS[l])}</label>
       <label>Notation des inputs ${sel('notation', ['gc', 'texte'], prefs.notation, x => x === 'gc' ? 'Manette GameCube (boutons)' : 'Texte (up-tilt, side-B…)')}</label>
       <label>${T('theme')} ${sel('theme', ['auto', 'light', 'dark'], prefs.theme, x => T('theme_' + x))}</label>
@@ -752,7 +886,17 @@
       <div class="grid2"><label>${T('cache_limit')}<input type="number" name="cacheMB" min="10" max="5000" value="${prefs.cacheMB}"></label>
         <label>${T('vault_limit')}<input type="number" name="vaultMB" min="10" max="10000" value="${prefs.vaultMB}"></label></div>
       <p id="usage" class="muted">…</p>
-      <div class="row wrap"><button type="button" class="btn ghost" data-act="dl-offline">⬇ ${T('offline_dl')}</button><button type="button" class="btn ghost" data-act="purge">${T('purge')}</button></div>
+      <h2>Hors-ligne : images</h2>
+      <p class="muted">Les GIFs et icônes viennent de SmashWiki. Télécharge-les ici pour les voir sans réseau (stockés sur cet appareil uniquement, pour ton usage).</p>
+      <div class="dl-grid">
+        <button type="button" class="btn ghost" data-act="dl" data-set="heads">Icônes des 80 persos <small>≈ 0,5 Mo</small></button>
+        <button type="button" class="btn ghost" data-act="dl" data-set="main">Hitbox de ${esc(mainNom())} <small>≈ 15 Mo</small></button>
+        <button type="button" class="btn ghost" data-act="dl" data-set="favs">GIFs de mes favoris <small>≈ 20 Mo / perso</small></button>
+        <button type="button" class="btn ghost" data-act="dl" data-set="fiches">GIFs des 80 fiches <small>≈ 200 Mo</small></button>
+        <button type="button" class="btn ghost" data-act="dl" data-set="all">Toutes les hitbox (2 355) <small>≈ 1 Go : PC conseillé</small></button>
+        <button type="button" class="btn ghost danger" data-act="dl-clear">Vider les images hors-ligne</button>
+      </div>
+      <div id="dl-prog" class="muted"></div>
       <h2>${T('vault')}</h2><div id="vault-box"></div>
       <h2>${T('sources_title')}</h2>
       <fieldset><legend>${esc(poppt.nom || 'Poppt1')} — priorité ${poppt.priorite || 1}</legend>
@@ -778,6 +922,7 @@
       else if (el.name === 'theme') { prefs.theme = el.value; applyTheme(); }
       else if (el.name === 'wakelock') prefs.wakelock = el.checked;
       else if (el.name === 'notation') prefs.notation = el.value;
+      else if (el.name === 'main') { prefs.main = el.value; savePrefs(); toast('Perso : ' + mainNom()); route(); return; }
       else if (el.name === 'cacheMB' || el.name === 'vaultMB') prefs[el.name] = Math.max(10, +el.value || DEFAULTS[el.name]);
       else return;
       savePrefs(); if (el.name === 'lang') route();
@@ -840,8 +985,9 @@
       case 'admin': html = p[1] ? viewAdminEdit(p[1]) : viewAdmin(); after = p[1] ? null : renderVeille; break;
       case 'reglages': html = viewSettings(); after = afterSettings; break;
       case 'journal': html = viewJournal(params); break;
-      case 'frames': html = viewFrames(); after = () => hydrateMedia(app); break;
-      case 'guide': html = viewGuide(); break;
+      case 'frames': html = mainId() === 'bowser' ? viewFrames() : viewFramesGeneric(); after = () => { hydrateMedia(app); fillFrames(); }; break;
+      case 'guide': html = mainId() === 'bowser' ? viewGuide() : viewGuideGeneric(); after = fillGuideKill; break;
+      case 'kill': html = viewKill(params); after = afterKill; break;
       case 'routine': location.replace('#/drill/routine-bowser'); return;
       default: html = viewNotFound();
     }
@@ -907,6 +1053,8 @@
           await S.put('fiches', vs, f); await loadLocal(); toast('Ajouté à ' + f.nom + ' (à vérifier)'); break;
         }
         case 'purge': await S.MediaCache.clear(); toast('Cache vidé'); afterSettings(); break;
+        case 'dl': await downloadSet(el.dataset.set, el.dataset.id); break;
+        case 'dl-clear': if ('caches' in self) { await caches.delete('prematch-media'); toast('Images hors-ligne supprimées'); afterSettings(); } break;
         case 'dl-offline': {
           let n = 0, fail = 0;
           for (const f of Object.values(DATA.fiches)) for (const m of f.medias || []) {
@@ -971,7 +1119,8 @@
   window.addEventListener('hashchange', route);
   route();                                                              // rendu immédiat depuis le bundle
   performance.mark && performance.mark('prematch-first-render');
+  setTimeout(loadCombat, 1500);
   Promise.all([loadLocal(), loadJournal()]).then(([changed]) => { if ((changed || JOURNAL.length) && !location.hash.startsWith('#/admin/') && !location.hash.startsWith('#/drill/')) route(); });
-  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW :', err));
+  if ('serviceWorker' in navigator && /^(https?|app):$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW :', err));
   self.PMApp = { get data() { return DATA; }, parseYouTube, parseTs, fmtTs };
 })();

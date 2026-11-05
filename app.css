@@ -283,3 +283,18 @@ nav.bottom a.on { color: var(--acc); }
 .gc-ref { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; line-height: 2; }
 .gc-ref ul { line-height: 1.7; padding-left: 18px; }
 @media (max-width: 420px) { .sp-cols { grid-template-columns: 1fr; } }
+
+/* v5 : combat, kill, hors-ligne */
+.tiles { grid-template-columns: repeat(3, 1fr); }
+.combat h4 { margin: 16px 0 6px; }
+.adv-unsafe b { color: var(--bad); } .adv-meh b { color: var(--warn); } .adv-ok b { color: var(--ok); }
+.chip b { font-variant-numeric: tabular-nums; }
+table.ko { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+table.ko th, table.ko td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+table.ko td:first-child { white-space: normal; }
+table.ko td:not(:first-child), table.ko th:not(:first-child) { text-align: right; }
+table.ko th { background: var(--bg3); font-size: 12px; text-transform: uppercase; color: var(--muted); }
+.dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dl-grid .btn { flex-direction: column; min-height: 56px; text-align: center; line-height: 1.2; }
+.dl-grid small { font-weight: 500; color: var(--muted); font-size: 12px; }
+@media (max-width: 420px) { .dl-grid { grid-template-columns: 1fr; } }
