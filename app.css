@@ -250,3 +250,36 @@ nav.bottom a.on { color: var(--acc); }
 .check li.now { background: color-mix(in srgb, var(--acc) 14%, transparent); border-radius: 8px; padding-left: 8px; }
 .seg input { width: 18px; height: 18px; accent-color: var(--acc); }
 .form .seg label { flex-direction: row; }
+
+/* v4 : icônes de tête, SmashPro, notation GameCube, guide */
+.head { --s: 32px; position: relative; display: inline-grid; place-items: center; width: var(--s); height: var(--s); flex: none; border-radius: 50%; background: var(--bg3); overflow: hidden; vertical-align: middle; }
+.head::before { content: attr(data-ini); font-size: calc(var(--s) * .38); font-weight: 800; color: var(--muted); }
+.head img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.mu.mu-h { grid-template-columns: 40px 34px 1fr; }
+.mu.mu-h .head { grid-row: span 2; align-self: center; }
+.pill.sm { width: 32px; height: 32px; font-size: 14px; border-radius: 8px; }
+.chip-h { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 4px; }
+.top .head { margin-right: -2px; }
+.prematch .head { background: rgba(0,0,0,.2); }
+.sp-tag { font-style: normal; font-size: 10px; font-weight: 800; padding: 1px 5px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+.sp-fav { color: var(--ok); } .sp-def { color: var(--bad); }
+.sp-tag.sp-fav { background: color-mix(in srgb, var(--ok) 20%, transparent); } .sp-tag.sp-def { background: color-mix(in srgb, var(--bad) 20%, transparent); }
+.sp-line { font-size: 14px; margin: 10px 0 0; padding: 8px 12px; border-radius: 10px; background: var(--bg2); border: 1px solid var(--line); }
+.sp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sp-cols ul { padding-left: 18px; margin: 4px 0; }
+.gcin { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 8px; border-radius: 10px; background: var(--bg3); border: 1px solid var(--line); }
+.gc-t { font-size: 12px; color: var(--muted); font-weight: 600; }
+.gc-k { display: inline-flex; align-items: center; gap: 3px; flex-wrap: wrap; justify-content: center; }
+.gc-k i { font-style: normal; font-size: 11px; color: var(--muted); margin: 0 2px; }
+.gc { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 5px; border-radius: 13px; font: 800 13px/1 system-ui, sans-serif; color: #fff; }
+.gc-A { background: #1fa36b; } .gc-B { background: #d23a3a; } .gc-X, .gc-Y { background: #c9ccd2; color: #222; border-radius: 8px; }
+.gc-Z { background: #6b4fd8; border-radius: 6px; } .gc-R, .gc-L { background: #8e939c; border-radius: 6px; } .gc-C { background: #f2c230; color: #2a2100; }
+.gc-stick { background: #50555e; border-radius: 50%; }
+.guide-head { display: flex; gap: 14px; align-items: center; margin-top: 12px; }
+.guide-head h1 { font-size: 26px; white-space: normal; }
+.best-i { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin: 8px 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.best-i p { margin: 0; font-size: 15px; }
+.g-mu h4 { margin: 12px 0 6px; }
+.gc-ref { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; line-height: 2; }
+.gc-ref ul { line-height: 1.7; padding-left: 18px; }
+@media (max-width: 420px) { .sp-cols { grid-template-columns: 1fr; } }

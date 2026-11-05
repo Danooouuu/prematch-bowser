@@ -87,7 +87,28 @@ if (hitboxes.pyra && hitboxes.mythra) {
 }
 if (errors.length) { console.error('✗ Hitboxes :\n  ' + errors.join('\n  ')); process.exit(1); }
 
-const bundle = { matchups, fiches, drills, sources, hitboxes: { base: 'https://ssb.wiki.gallery/images/', credit: 'Contributeurs SmashWiki · images du jeu © Nintendo', perso: hitboxes }, built: new Date().toISOString() };
+/* ---------- Profils SmashPro.tips + icônes de tête SmashWiki ---------- */
+const smashpro = {}, heads = {};
+for (const line of readFileSync(join(root, 'data', 'smashpro.txt'), 'utf8').split('\n')) {
+  if (!line.trim() || line.startsWith('#')) continue;
+  const [id, slug, forts, faibles, coups, opts] = line.split('|');
+  if (!ids.has(id)) { errors.push(`smashpro : id inconnu ${id}`); continue; }
+  const sp = x => (x || '').split('/').map(t => t.trim()).filter(Boolean);
+  smashpro[id] = { slug, forts: sp(forts), faibles: sp(faibles), coups: sp(coups), opts: sp(opts) };
+}
+for (const line of readFileSync(join(root, 'data', 'heads.txt'), 'utf8').split('\n')) {
+  if (!line.trim() || line.startsWith('#')) continue;
+  const [id, path] = line.split('=');
+  if (!ids.has(id)) { errors.push(`heads : id inconnu ${id}`); continue; }
+  heads[id] = path.trim();
+}
+const noHead = [...ids].filter(i => !heads[i]); if (noHead.length) errors.push('icônes manquantes : ' + noHead.join(', '));
+if (errors.length) { console.error('✗ SmashPro / icônes :\n  ' + errors.join('\n  ')); process.exit(1); }
+
+const bundle = { matchups, fiches, drills, sources,
+  smashpro: { base: 'https://smashpro.tips/personnages/', credit: '© Smash Pro (smashpro.tips)', perso: smashpro },
+  heads: { base: 'https://ssb.wiki.gallery/images/', credit: 'Icônes : SmashWiki · © Nintendo', perso: heads },
+  hitboxes: { base: 'https://ssb.wiki.gallery/images/', credit: 'Contributeurs SmashWiki · images du jeu © Nintendo', perso: hitboxes }, built: new Date().toISOString() };
 writeFileSync(join(root, 'data', 'bundle.js'), '/* Généré par tools/build-bundle.mjs — ne pas éditer à la main. */\nself.PREMATCH_DATA = ' + JSON.stringify(bundle) + ';\n');
 
 const swPath = join(root, 'sw.js');

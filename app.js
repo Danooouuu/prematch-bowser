@@ -52,7 +52,7 @@
 
   /* ---------- Préférences (localStorage, jamais bloquant) ---------- */
   const PREF_KEY = 'prematch-prefs-v1';
-  const DEFAULTS = { lang: 'fr', theme: 'auto', wakelock: true, cacheMB: 150, vaultMB: 500, favs: ['pikachu', 'peach'], recents: [], combosOpen: true, flash: {}, drillLog: [] };
+  const DEFAULTS = { lang: 'fr', notation: 'gc', theme: 'auto', wakelock: true, cacheMB: 150, vaultMB: 500, favs: ['pikachu', 'peach'], recents: [], combosOpen: true, flash: {}, drillLog: [] };
   let prefs = (() => { try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(PREF_KEY) || '{}') }; } catch (e) { return { ...DEFAULTS }; } })();
   const savePrefs = () => { try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch (e) { /* stockage indisponible : l'app marche quand même */ } };
   function applyTheme() {
@@ -95,11 +95,63 @@
   const nav = active => `<nav class="bottom" aria-label="Navigation">
     ${[['home', '#/', '⌂'], ['drills', '#/drills', '⏱'], ['flash', '#/flash', '⧉'], ['journal', '#/journal', '✍'], ['settings', '#/reglages', '⚙']]
       .map(([k, href, ic]) => `<a href="${href}" class="${active === k ? 'on' : ''}"><span aria-hidden="true">${ic}</span>${T('nav_' + k)}</a>`).join('')}</nav>`;
-  const top = (title, backHref, extra = '') => `<header class="top">
+  const top = (title, backHref, extra = '', headId = '') => `<header class="top">
     ${backHref ? `<a class="icon-btn" href="${backHref}" aria-label="${T('back')}">‹</a>` : `<div class="brand">${T('app')} <span>${T('sub')}</span></div>`}
-    ${backHref ? `<h1>${esc(title)}</h1>` : ''}<div class="top-extra">${extra}</div></header>`;
+    ${backHref ? `${headId ? head(headId, 36) : ''}<h1>${esc(title)}</h1>` : ''}<div class="top-extra">${extra}</div></header>`;
   const meter = d => `<div class="meter ${dClass(d)}" role="img" aria-label="${T('difficulty')} ${d}/10">${Array.from({ length: 10 }, (_, i) => `<i class="${i < d ? 'on' : ''}"></i>`).join('')}<b>${d}/10</b></div>`;
   const goalTag = g => `<span class="goal g-${esc(g)}">${T('goal_' + g)}</span>`;
+  /* Icône de tête (SmashWiki) avec repli sur les initiales si l'image ne charge pas */
+  const HEADS = BASE.heads || { perso: {} };
+  function head(id, size = 32) {
+    const p = HEADS.perso[id]; const m = DATA.byId[id] || { nom: id };
+    const ini = esc(m.nom.replace(/[^A-Za-zÀ-ÿ ]/g, '').split(' ').map(w => w[0]).join('').slice(0, 2));
+    return `<span class="head" style="--s:${size}px" data-ini="${ini}">${p ? `<img src="${HEADS.base + p}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="${size}" height="${size}" onerror="this.remove()">` : ''}</span>`;
+  }
+  /* Notation manette GameCube */
+  const K = (b, cls) => `<b class="gc gc-${cls || b}">${b}</b>`;
+  const ST = d => `<b class="gc gc-stick">${d}</b>`, CS = d => `<b class="gc gc-C">C${d}</b>`;
+  const GC_RULES = [
+    [/saut court|short hop/, () => K('X') + '<i>tap</i>'], [/fast.?fall|chute rapide/, () => ST('↓') + '<i>au sommet</i>'],
+    [/up.?throw/, () => K('Z') + ST('↑')], [/down.?throw/, () => K('Z') + ST('↓')], [/back.?throw/, () => K('Z') + ST('←')], [/(forward|f).?throw/, () => K('Z') + ST('→')],
+    [/hors bouclier|oos/, () => K('R') + '+' + ST('↑') + K('B')],
+    [/up.?b|whirling|climhazzard|fire fox|up-b/, () => ST('↑') + K('B')], [/side.?b|flying slam|spin dash|kart|roller|whip/, () => ST('→') + K('B')],
+    [/down.?b|bowser bomb|seau|vengeance|counter|thunder(?! jolt)|rest\b/, () => ST('↓') + K('B')], [/neutral.?b|souffle|jolt|laser|charge shot/, () => K('B')],
+    [/up.?smash/, () => CS('↑')], [/(side|f).?smash/, () => CS('→')], [/down.?smash/, () => CS('↓')],
+    [/up.?tilt/, () => ST('↑') + '<i>léger</i>' + K('A')], [/d.?tilt|tilt bas/, () => ST('↓') + K('A')], [/f.?tilt|tilt/, () => ST('→') + '<i>léger</i>' + K('A')],
+    [/up.?air|uair/, () => CS('↑') + '<i>en l’air</i>'], [/\bfair/, () => CS('→') + '<i>en l’air</i>'], [/\bbair/, () => CS('←') + '<i>en l’air</i>'],
+    [/\bdair/, () => CS('↓') + '<i>en l’air</i>'], [/\bnair/, () => K('A') + '<i>en l’air</i>'], [/\bzair/, () => K('Z') + '<i>en l’air</i>'],
+    [/dash attack|attaque en course/, () => ST('⇉') + K('A')], [/\bjab/, () => K('A')], [/grab|saisie/, () => K('Z')], [/bouclier/, () => K('R')],
+    [/esquive/, () => K('R') + ST('↕')], [/\bdash|course/, () => ST('⇉')], [/saut/, () => K('X')]];
+  function gcInput(txt) {
+    if (prefs.notation !== 'gc') return `<kbd>${esc(txt)}</kbd>`;
+    const t = String(txt).toLowerCase(); const r = GC_RULES.find(([re]) => re.test(t));
+    return `<span class="gcin"><span class="gc-t">${esc(txt)}</span>${r ? `<span class="gc-k">${r[1]()}</span>` : ''}</span>`;
+  }
+  /* SmashPro.tips : nom de coup anglais → GIF de hitbox */
+  const SP = BASE.smashpro || { perso: {} };
+  const SP_MAP = [['NEUTRAL AIR', 'Nair'], ['FORWARD AIR', 'Fair'], ['BACK AIR', 'Bair'], ['UP AIR', 'Uair'], ['DOWN AIR', 'Dair'], ['ZAIR', 'Zair'],
+    ['UP SMASH', 'Smash haut'], ['FORWARD SMASH', 'Smash avant'], ['DOWN SMASH', 'Smash bas'], ['UP TILT', 'Tilt haut'], ['DOWN TILT', 'Tilt bas'], ['FORWARD TILT', 'Tilt avant'],
+    ['DASH ATTACK', 'Attaque en course'], ['JAB', 'Jab'], ['DOWN THROW', 'Projection bas'], ['UP THROW', 'Projection haut'], ['GRAB', 'Saisie'],
+    ['NEUTRAL B', 'Spécial neutre'], ['SIDE B', 'Spécial côté'], ['UP B', 'Spécial haut'], ['DOWN B', 'Spécial bas']];
+  function spMove(id, name) {
+    const h = (BASE.hitboxes || { perso: {} }).perso[id]; if (!h) return -1;
+    const up = name.toUpperCase(); const hit = SP_MAP.find(([k]) => up.startsWith(k)); if (!hit) return -1;
+    let i = h.moves.findIndex(m => m[0].startsWith(hit[1]));
+    const FILE = { 'Spécial neutre': /NSpecial|NeutralSpecial/, 'Spécial côté': /SSpecial|SideSpecial/, 'Spécial haut': /USpecial|UpSpecial/, 'Spécial bas': /DSpecial|DownSpecial/ };
+    if (i < 0 && FILE[hit[1]]) i = h.moves.findIndex(m => FILE[hit[1]].test(decodeURIComponent(m[2])));
+    return i;
+  }
+  function spSection(id, open) {
+    const p = SP.perso[id]; if (!p) return '';
+    const coup = c => { const i = spMove(id, c); return i >= 0 ? `<button class="chip sm" data-act="hb" data-id="${esc(id)}" data-i="${i}">${esc(c)}</button>` : `<span class="chip sm">${esc(c)}</span>`; };
+    return `<details class="sec moves sp" ${open ? 'open' : ''}><summary><h2>Profil SmashPro.tips</h2></summary>
+      <div class="sp-cols"><div><h4>Points forts</h4><ul class="small">${p.forts.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div><h4>Points faibles</h4><ul class="small">${p.faibles.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div>
+      ${p.coups.length ? `<h4>Ses meilleurs coups <small class="muted">(touche pour voir la hitbox)</small></h4><div class="chips hb-chips">${p.coups.map(coup).join('')}</div>` : ''}
+      <div class="hb-view" data-hb-view></div>
+      ${p.opts.length ? `<h4>Ses options rapides, sûres sur bouclier et hors bouclier</h4><p class="small">${p.opts.map(esc).join(' · ')}</p>` : ''}
+      <p class="src">Source : <a href="${SP.base + esc(p.slug)}/" target="_blank" rel="noopener">SmashPro.tips — fiche complète ↗</a> (${esc(SP.credit)}) · hitbox : SmashWiki</p></details>`;
+  }
   const permTag = p => `<span class="perm p-${esc(p)}">${T('perm_' + p)}</span>`;
 
   /* ---------- Médias / carousel ---------- */
@@ -163,18 +215,23 @@
   }
   function showMove(btn) {
     const h = HB.perso[btn.dataset.id]; const m = h && h.moves[+btn.dataset.i]; if (!m) return;
-    const box = $('[data-hb-view]', btn.closest('.moves'));
-    $$('.hb-chips .chip', btn.closest('.moves')).forEach(c => c.classList.toggle('on', c === btn));
+    const scope = btn.closest('.moves') || app;
+    const box = $('[data-hb-view]', scope);
+    $$('[data-act="hb"]', scope).forEach(c => c.classList.toggle('on', c === btn));
     box.innerHTML = `<figure class="slide hb-slide">${mediaSlide({ type: 'gif', url: HB.base + m[2], titre: m[0], source: 'SmashWiki (hitbox)', auteur: HB.credit, lien: h.page, permission: 'lien_seulement', statut: 'verifie' }).replace(/^<figure class="slide">|<\/figure>$/g, '')}</figure>`;
     box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   /* ---------- Écran : accueil ---------- */
   function muRow(m) {
-    return `<a class="mu" href="#/vs/${m.id}"><span class="pill ${dClass(m.difficulte)}">${m.difficulte}</span>
-      <span class="mu-name">${esc(m.nom)}${m.fiche ? '<em title="Fiche complète">●</em>' : ''}</span>
+    return `<a class="mu mu-h" href="#/vs/${m.id}">${head(m.id, 40)}<span class="pill sm ${dClass(m.difficulte)}">${m.difficulte}</span>
+      <span class="mu-name">${esc(m.nom)}${spTag(m.id)}</span>
       <small>${esc(m.justification)}</small></a>`;
   }
+  const SP_BOWSER = { littlemac: ['fav', 'Favorable'], dk: ['fav', 'Favorable'], krool: ['fav', 'Favorable'], hero: ['fav', 'Favorable (dur à approcher)'],
+    pikachu: ['def', 'Défavorable'], greninja: ['def', 'Défavorable'], ness: ['def', 'Défavorable (taille et combos)'], younglink: ['def', 'Défavorable (taille et combos)'],
+    samus: ['def', 'Défavorable (taille et combos)'], palutena: ['def', 'Défavorable (zoneur)'], roy: ['def', 'Défavorable (zoneur)'], peach: ['def', 'Défavorable (zoneur)'] };
+  const spTag = id => SP_BOWSER[id] ? `<em class="sp-tag sp-${SP_BOWSER[id][0]}" title="Avis SmashPro.tips pour Bowser : ${esc(SP_BOWSER[id][1])}">SP</em>` : '';
   function search(q) {
     const n = norm(q);
     if (!n) return DATA.matchups;
@@ -182,13 +239,13 @@
   }
   function viewHome() {
     const last = prefs.recents[0] && DATA.byId[prefs.recents[0]];
-    const chips = ids => ids.map(id => DATA.byId[id]).filter(Boolean).map(m => `<a class="chip ${dClass(m.difficulte)}" href="#/vs/${m.id}">${esc(m.nom)}</a>`).join('');
+    const chips = ids => ids.map(id => DATA.byId[id]).filter(Boolean).map(m => `<a class="chip chip-h ${dClass(m.difficulte)}" href="#/vs/${m.id}">${head(m.id, 24)}${esc(m.nom)}</a>`).join('');
     return `${top()}
       <main class="home">
         <a class="prematch" href="${last ? '#/vs/' + last.id : '#/'}" data-act="${last ? '' : 'focus-search'}">
-          <span>⚡</span><span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
+          ${last ? head(last.id, 40) : '<span>⚡</span>'}<span>${last ? T('prematch_last', { name: esc(last.nom) }) : T('prematch_none')}</span></a>
         <nav class="tiles" aria-label="Sections">
-          ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/vs/bowser', 'fiches', 'Mes coups']]
+          ${[['#/routine', 'drills', 'Routine 10 min'], ['#/journal', 'journal', 'Journal'], ['#/flash', 'revision', 'Révision'], ['#/frames', 'framedata', 'Frame data'], ['#/guide', 'fiches', 'Guide Bowser']]
             .map(([h, ic, l]) => `<a class="tile" href="${h}"><img src="icons/section-${ic}.png" alt="" width="56" height="56">${l}</a>`).join('')}
         </nav>
         ${journalBanner()}
@@ -215,7 +272,7 @@
   function comboBody(f, c, full) {
     const ref = c.ref_poppt;
     return `<div class="combo-body">
-      <div class="inputs" aria-label="${T('inputs')}">${(c.inputs || []).map(x => `<kbd>${esc(x)}</kbd>`).join('<span class="arr">→</span>')}</div>
+      <div class="inputs ${prefs.notation === 'gc' ? 'gc-mode' : ''}" aria-label="${T('inputs')}">${(c.inputs || []).map(gcInput).join('<span class="arr">→</span>')}</div>
       <dl class="cond">
         <div><dt>%</dt><dd>${esc(c.conditions && c.conditions.pourcent)}</dd></div>
         <div><dt>${T('pos')}</dt><dd>${esc(c.conditions && c.conditions.position)}</dd></div>
@@ -240,14 +297,14 @@
     const fav = prefs.favs.includes(id);
     const favBtn = `<button class="icon-btn ${fav ? 'fav' : ''}" data-act="fav" data-id="${id}" aria-pressed="${fav}" aria-label="Favori">${fav ? '★' : '☆'}</button>`;
     if (!f) {
-      return `${top(m.nom, '#/', favBtn)}<main class="fiche">${meter(m.difficulte)}
+      return `${top(m.nom, '#/', favBtn, id)}<main class="fiche">${meter(m.difficulte)}
         <p class="lead">${esc(m.justification)}</p><p class="muted">${T('stub')}</p>
         <a class="btn" href="#/admin/${id}">✎ ${T('stub_create')}</a>
-        ${movesSection(id, true, id === 'bowser' ? 'Coups de Bowser en images' : 'Ses coups en images')}</main>${nav('')}`;
+        ${spSection(id, true)}${movesSection(id, true, id === 'bowser' ? 'Coups de Bowser en images' : 'Ses coups en images')}</main>${nav('')}`;
     }
     const combos = f.combos || [];
-    return `${top(f.nom, '#/', favBtn)}
-      <main class="fiche">
+    return `${top(f.nom, '#/', favBtn, id)}
+      <main class="fiche">${SP_BOWSER[id] ? `<p class="sp-line sp-${SP_BOWSER[id][0]}">SmashPro.tips classe ce matchup pour Bowser : <b>${esc(SP_BOWSER[id][1])}</b></p>` : ''}
         <div class="fiche-head">${meter(f.difficulte)}<button class="btn quick" data-act="quick">💡 ${T('quick')}</button></div>
         ${recordLine(id)}
         <section><h2>${T('win')}</h2><ul class="win">${(f.win_conditions || []).slice(0, 4).map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>
@@ -256,6 +313,7 @@
           ${combos.map(c => `<details class="combo"><summary><span class="ct">${esc(c.titre)}</span>${goalTag(c.but)}<span class="cp">${esc((c.conditions && c.conditions.pourcent || '').split('(')[0])}</span></summary>${comboBody(f, c, false)}</details>`).join('')}
         </details>
         ${(f.setups || []).length ? `<details class="sec"><summary><h2>${T('setups')}</h2></summary>${f.setups.map(s => `<div class="setup"><b>${esc(s.titre)}</b><p><span class="lbl">${T('reco')}</span> ${esc(s.reconnaitre)}</p><p><span class="lbl ok">${T('answer')}</span> ${esc(s.reponse)}</p></div>`).join('')}</details>` : ''}
+        ${spSection(id, false)}
         ${movesSection(id, false, 'Tous ses coups en images')}
         <section><h2>${T('tips')}</h2><ol class="tips">${(f.conseils_bowser || []).map(x => `<li>${esc(x)}</li>`).join('')}</ol></section>
         ${f.stage ? `<p class="stage">🗺 <b>Stage à proposer :</b> ${esc(f.stage)}</p>` : ''}
@@ -324,8 +382,8 @@
       <h2>Bilan</h2>
       ${JOURNAL.length ? `<p class="big-stat"><b class="win-c">${tot.v} V</b> – <b class="loss-c">${tot.d} D</b> · ${Math.round(100 * tot.v / (tot.v + tot.d))} % de victoires sur ${JOURNAL.length} matchs</p>
         ${tc.length ? `<h2>Ce qui te coûte le plus de défaites</h2><div class="bars">${tc.map(([k, n]) => { const c = CAUSES.find(x => x[0] === k); return `<a class="bar" href="#/drill/${c[2]}"><span class="bar-l">${esc(c[1])}</span><span class="bar-t"><i style="width:${Math.round(100 * n / maxC)}%"></i></span><span class="bar-n">${n}</span></a>`; }).join('')}</div><p class="muted">Touche une cause pour ouvrir le drill correspondant.</p>` : ''}
-        <h2>Par adversaire</h2><div class="list">${rows.map(([id, r]) => { const m = DATA.byId[id] || { nom: id, difficulte: 5 }; const n = r.v + r.d; return `<a class="mu" href="#/vs/${id}"><span class="pill ${dClass(m.difficulte)}">${Math.round(100 * r.v / n)}%</span><span class="mu-name">${esc(m.nom)}</span><small>${r.v} V – ${r.d} D</small></a>`; }).join('')}</div>
-        <h2>Derniers matchs</h2><div class="list">${JOURNAL.slice(0, 15).map((j, i) => { const m = DATA.byId[j.vs] || { nom: j.vs }; return `<div class="jrow"><b class="${j.res === 'V' ? 'win-c' : 'loss-c'}">${j.res}</b> ${esc(m.nom)}${j.stage ? ' · ' + esc(j.stage) : ''} <small>${new Date(j.at).toLocaleDateString('fr-CH')}${(j.causes || []).length ? ' · ' + j.causes.map(k => (CAUSES.find(c => c[0] === k) || [])[1]).filter(Boolean).map(esc).join(', ') : ''}${j.note ? ' · « ' + esc(j.note) + ' »' : ''}</small><button class="icon-btn sm" data-act="j-del" data-i="${i}" aria-label="Supprimer">×</button></div>`; }).join('')}</div>`
+        <h2>Par adversaire</h2><div class="list">${rows.map(([id, r]) => { const m = DATA.byId[id] || { nom: id, difficulte: 5 }; const n = r.v + r.d; return `<a class="mu mu-h" href="#/vs/${id}">${head(id, 40)}<span class="pill sm ${dClass(m.difficulte)}">${Math.round(100 * r.v / n)}%</span><span class="mu-name">${esc(m.nom)}</span><small>${r.v} V – ${r.d} D</small></a>`; }).join('')}</div>
+        <h2>Derniers matchs</h2><div class="list">${JOURNAL.slice(0, 15).map((j, i) => { const m = DATA.byId[j.vs] || { nom: j.vs }; return `<div class="jrow"><b class="${j.res === 'V' ? 'win-c' : 'loss-c'}">${j.res}</b>${head(j.vs, 24)} ${esc(m.nom)}${j.stage ? ' · ' + esc(j.stage) : ''} <small>${new Date(j.at).toLocaleDateString('fr-CH')}${(j.causes || []).length ? ' · ' + j.causes.map(k => (CAUSES.find(c => c[0] === k) || [])[1]).filter(Boolean).map(esc).join(', ') : ''}${j.note ? ' · « ' + esc(j.note) + ' »' : ''}</small><button class="icon-btn sm" data-act="j-del" data-i="${i}" aria-label="Supprimer">×</button></div>`; }).join('')}</div>`
         : '<p class="muted">Aucun match pour l’instant. Note chaque set : après une dizaine de matchs, l’app te montre tes vraies faiblesses et le drill qui va avec.</p>'}
     </main>${nav('journal')}`;
   }
@@ -380,6 +438,53 @@
       <h2>Caractéristiques</h2><dl class="stats">${FRAMES.stats.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
       <p class="src">Source : <a href="${FRAMES.source}" target="_blank" rel="noopener">Ultimate Frame Data — Bowser</a></p>
       ${movesSection('bowser', false, 'Hitbox de tes coups (SmashWiki)')}
+    </main>${nav('')}`;
+  }
+
+  /* ---------- Guide Bowser (rédigé d'après SmashPro.tips, frame data UFD, hitbox SmashWiki) ---------- */
+  function viewGuide() {
+    const p = SP.perso.bowser || { forts: [], faibles: [] };
+    const best = [
+      ['Fair', 'Fair', 'Démarrage un peu lent, mais grande portée et une zone très large, même derrière toi et contre les petits persos. C’est ton aérien le plus sûr sur bouclier (−9) : combos à bas %, kill à haut %, et une arme d’edgeguard.'],
+      ['Nair', 'Nair', 'Beaucoup de dégâts et un démarreur de combo à tous les % (nair en chute rapide → up-tilt). Il peut mener à un kill confirm.'],
+      ['Side-B (Flying Slam)', 'FlyingSlamGrounded', 'Saisie qui ignore le bouclier, sort frame 6 même en l’air : option hors bouclier et pour atterrir. Gros lag si ça rate : le jeu mental, c’est d’alterner fair et side-B pour que l’adversaire ne sache jamais lequel arrive.'],
+      ['Up-smash', 'Smash haut', 'La carapace est invincible et dépasse ta hurtbox : elle passe à travers beaucoup de contres et d’attaques aériennes. Éjection énorme, et la 2e hitbox à la retombée peut lancer un combo.'],
+      ['Up-B au sol', 'WhirlingFortressGrounded', 'Ta punition hors bouclier par défaut (frame 6). Elle touche des deux côtés et tu peux te déplacer pendant, ce qui couvre les atterrissages. Lag de fin important : si l’adversaire t’appâte, tu es puni.']];
+    const hbB = (BASE.hitboxes || { perso: {} }).perso.bowser;
+    const mv = lab => { const i = hbB ? hbB.moves.findIndex(m => m[0].startsWith(lab) || m[2].includes(lab)) : -1; return i >= 0 ? `<button class="chip sm" data-act="hb" data-id="bowser" data-i="${i}">Voir la hitbox</button>` : ''; };
+    const group = (title, ids, cls) => `<div class="g-mu"><h4 class="sp-${cls}">${title}</h4><div class="chips">${ids.filter(i => DATA.byId[i]).map(i => `<a class="chip chip-h" href="#/vs/${i}">${head(i, 24)}${esc(DATA.byId[i].nom)}</a>`).join('')}</div></div>`;
+    return `${top('Guide Bowser', '', '', 'bowser')}<main class="guide">
+      <div class="guide-head">${head('bowser', 64)}<div><h1>Bowser</h1><p class="muted">Le plus lourd du jeu (poids 135) : il encaisse, tape fort et contrôle la scène, mais ses coups sont punissables et son désavantage est faible.</p></div></div>
+      <div class="sp-cols"><div><h4>Points forts</h4><ul class="small">${p.forts.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div><h4>Points faibles</h4><ul class="small">${p.faibles.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div>
+      <h2>Tes 5 meilleurs coups</h2>
+      <div class="moves best">${best.map(([n, lab, txt]) => `<div class="best-i"><b>${esc(n)}</b> ${gcInput(n.split(' (')[0])}<p>${esc(txt)}</p>${mv(lab)}</div>`).join('')}<div class="hb-view" data-hb-view></div></div>
+      <h2>À retenir</h2>
+      <ol class="tips">
+        <li><b>Patience.</b> Bowser n’est jamais vraiment en sécurité si l’adversaire lit tes attaques : alterne défense et agression, et change de mode au bon moment.</li>
+        <li><b>Up-B.</b> En récupération, le rythme de tes appuis change la hauteur : ne martèle pas B. Hors bouclier, ne le sors pas à chaque fois : beaucoup de coups sont sûrs sur ton bouclier, accepte de ne pas tout punir.</li>
+        <li><b>Souffle de feu.</b> Pas en neutre à répétition : tu restes immobile plus d’une seconde.</li>
+        <li><b>Armure.</b> Certaines de tes attaques ont de l’armure : l’adversaire ne doit pas foncer dedans. Sers-t’en pour gagner les échanges.</li>
+      </ol>
+      <h2>Matchups selon SmashPro.tips</h2>
+      ${group('Favorables', ['littlemac', 'dk', 'krool', 'hero'], 'fav')}
+      ${group('Défavorables', ['pikachu', 'greninja'], 'def')}
+      ${group('Défavorables : taille et combos', ['ness', 'younglink', 'samus'], 'def')}
+      ${group('Défavorables : zoneurs', ['palutena', 'roy', 'peach'], 'def')}
+      <p class="muted">Leur avis diffère parfois du classement de l’app (tiré de Game8) : les deux sont affichés sur chaque fiche.</p>
+      <h2>Ta manette GameCube</h2>
+      <div class="gc-ref">
+        <div>${K('A')} Attaque · ${K('B')} Spécial · ${K('X')}/${K('Y')} Saut · ${K('Z')} Saisie · ${K('R')}/${K('L')} Bouclier · ${CS('')} Smash (réglage par défaut)</div>
+        <ul class="small">
+          <li>Up-B hors bouclier : garde ${K('R')}, puis ${ST('↑')} + ${K('B')}. Pas besoin de lâcher le bouclier.</li>
+          <li>Side-B hors bouclier : saute avec ${K('X')} depuis le bouclier, puis ${ST('→')} + ${K('B')} (frame 9).</li>
+          <li>Saut court : tapote ${K('X')}, ou appuie ${K('X')} + ${K('Y')} en même temps.</li>
+          <li>Aériens au C-stick (fair ${CS('→')}, bair ${CS('←')}) : tu gardes le stick pour te déplacer.</li>
+          <li>Réglages conseillés : « Saut avec le stick » désactivé (évite les sauts involontaires en up-B), et C-stick sur « Attaques » si tu préfères les tilts au C-stick.</li>
+        </ul>
+      </div>
+      <h2>Aller plus loin</h2>
+      <p><a class="btn ghost" href="#/frames">Frame data</a> <a class="btn ghost" href="#/routine">Routine 10 min</a> <a class="btn ghost" href="#/vs/bowser">Toutes ses hitbox</a></p>
+      <p class="src">Rédigé d’après <a href="${SP.base}bowser/" target="_blank" rel="noopener">SmashPro.tips — Bowser</a> (contributeurs Dineauzor, Gulbutron, Mika · ${esc(SP.credit)}), <a href="https://ultimateframedata.com/bowser" target="_blank" rel="noopener">Ultimate Frame Data</a> et les hitbox SmashWiki.</p>
     </main>${nav('')}`;
   }
 
@@ -640,6 +745,7 @@
     return `${top(T('settings'), '')}<main class="settings form">
       <a class="mine" href="#/admin">✎ Administration : éditer les fiches, médias, veille, sauvegarde</a>
       <label>${T('lang')} ${sel('lang', Object.keys(PMI18n.LANGS), prefs.lang, l => PMI18n.LANGS[l])}</label>
+      <label>Notation des inputs ${sel('notation', ['gc', 'texte'], prefs.notation, x => x === 'gc' ? 'Manette GameCube (boutons)' : 'Texte (up-tilt, side-B…)')}</label>
       <label>${T('theme')} ${sel('theme', ['auto', 'light', 'dark'], prefs.theme, x => T('theme_' + x))}</label>
       <label class="inline"><input type="checkbox" name="wakelock" ${prefs.wakelock ? 'checked' : ''}> ${T('wakelock')}</label>
       <h2>${T('storage')}</h2>
@@ -671,6 +777,7 @@
       if (el.name === 'lang') { prefs.lang = el.value; PMI18n.set(el.value); }
       else if (el.name === 'theme') { prefs.theme = el.value; applyTheme(); }
       else if (el.name === 'wakelock') prefs.wakelock = el.checked;
+      else if (el.name === 'notation') prefs.notation = el.value;
       else if (el.name === 'cacheMB' || el.name === 'vaultMB') prefs[el.name] = Math.max(10, +el.value || DEFAULTS[el.name]);
       else return;
       savePrefs(); if (el.name === 'lang') route();
@@ -734,6 +841,7 @@
       case 'reglages': html = viewSettings(); after = afterSettings; break;
       case 'journal': html = viewJournal(params); break;
       case 'frames': html = viewFrames(); after = () => hydrateMedia(app); break;
+      case 'guide': html = viewGuide(); break;
       case 'routine': location.replace('#/drill/routine-bowser'); return;
       default: html = viewNotFound();
     }
