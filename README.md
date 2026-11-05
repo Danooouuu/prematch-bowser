@@ -1,4 +1,14 @@
-# Prototype PréMatch — README technique
+# PréMatch Bowser
+
+## ▶ [Ouvrir l'app](https://danooouuu.github.io/prematch-bowser/)
+
+**https://danooouuu.github.io/prematch-bowser/**
+
+Sur iPhone : ouvre ce lien dans Safari → Partager → « Sur l'écran d'accueil ».
+
+---
+
+## README technique
 
 ## Lancer
 ```bash
