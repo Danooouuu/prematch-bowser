@@ -1,12 +1,13 @@
 /* Service worker : coquille de l'app + données en cache-first → ouverture instantanée et hors-ligne.
    Changer VERSION à chaque mise à jour du contenu (tools/build-bundle.mjs le fait automatiquement). */
-const VERSION = 'prematch-2026.11.05-mw3dofpr';
+const VERSION = 'prematch-2026.11.05-mw3drqkr';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'i18n.js', 'store.js', 'schemas.js', 'data/bundle.js',
   'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png',
   'icons/section-fiches.png', 'icons/section-drills.png', 'icons/section-revision.png', 'icons/section-journal.png', 'icons/section-framedata.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // cache: 'reload' contourne le cache HTTP (GitHub Pages garde les fichiers 10 min) : la nouvelle version est bien la bonne.
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('prematch-') && k !== VERSION).map(k => caches.delete(k))))
@@ -17,7 +18,7 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;   // médias tiers : jamais interceptés ni copiés
   e.respondWith(
     caches.match(e.request, { ignoreSearch: true }).then(hit => {
-      const net = fetch(e.request).then(res => {
+      const net = fetch(e.request, { cache: 'no-cache' }).then(res => {
         if (res.ok) caches.open(VERSION).then(c => c.put(e.request, res.clone()));
         return res;
       }).catch(() => hit);
