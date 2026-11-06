@@ -212,8 +212,7 @@
       case 'youtube': body = `<button class="yt" data-act="yt" data-vid="${esc(m.video_id)}" data-start="${parseTs(m.timestamp) || m.start || 0}" data-lien="${esc(m.lien)}">
           <img class="yt-thumb" alt="" loading="lazy" referrerpolicy="no-referrer" src="https://i.ytimg.com/vi/${encodeURIComponent(m.video_id)}/hqdefault.jpg" onerror="this.remove()">
           <span class="yt-play" aria-hidden="true">▶</span><span class="yt-label">${navigator.onLine ? T('media_online') : T('media_offline')}${m.timestamp ? ' · à ' + esc(m.timestamp) : ''}</span></button>`; break;
-      case 'gif': body = `<div class="gif-box"><img class="gif" alt="${esc(m.titre)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-cache-src="${esc(m.url)}" src="${esc(m.url)}"
-          onerror="this.parentElement.classList.add('gif-fail')"><span class="gif-msg">🖼 Image indisponible ici (hors-ligne ou bloquée). Elle se charge depuis ${esc((m.source || '').split(' ')[0] || 'sa source')} dès que tu as du réseau.</span></div>`; break;
+      case 'gif': body = `<div class="gif-box"><img class="gif" alt="${esc(m.titre)}" decoding="async" referrerpolicy="no-referrer" data-gif="${esc(m.url)}"><span class="gif-msg">🖼 Image indisponible ici (hors-ligne ou bloquée). Elle se charge depuis ${esc((m.source || '').split(' ')[0] || 'sa source')} dès que tu as du réseau.</span></div>`; break;
       case 'local': body = `<div class="local" data-local="${esc(m.blob_id)}"><span>🔒 ${T('media_locked')}</span></div>`; break;
       default: body = `<a class="search-card" href="${esc(m.lien)}" target="_blank" rel="noopener"><span aria-hidden="true">🔎</span><b>${esc(m.titre)}</b><small>Emplacement — lie un clip réel dans Admin</small></a>`;
     }

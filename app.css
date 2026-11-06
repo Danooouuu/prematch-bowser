@@ -301,3 +301,11 @@ table.ko th { background: var(--bg3); font-size: 12px; text-transform: uppercase
 .dl-grid .btn { flex-direction: column; min-height: 56px; text-align: center; line-height: 1.2; }
 .dl-grid small { font-weight: 500; color: var(--muted); font-size: 12px; }
 @media (max-width: 420px) { .dl-grid { grid-template-columns: 1fr; } }
+
+/* Lecteur GIF maison (gifplayer.js) */
+.gif-box img.gif:not([src]) { visibility: hidden; }
+.gif-cv { cursor: pointer; image-rendering: auto; }
+.gif-bar { display: flex; align-items: center; gap: 4px; padding: 4px 6px; background: var(--bg3); border-top: 1px solid var(--line); }
+.gif-bar button { min-width: 40px; min-height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg2); color: var(--fg); font: 600 14px/1 system-ui, sans-serif; cursor: pointer; }
+.gif-bar button:active { transform: scale(.96); }
+.gif-n { margin-left: auto; font: 600 12px/1 ui-monospace, Menlo, monospace; color: var(--muted); font-variant-numeric: tabular-nums; }
