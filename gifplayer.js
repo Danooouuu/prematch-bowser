@@ -126,7 +126,7 @@
     toggle() { this.playing ? this.pause() : this.play(); }
     play() { this.playing = true; this.bar.querySelector('[data-g="play"]').textContent = '⏸'; this.tick(); }
     pause() { this.playing = false; clearTimeout(this.timer); this.bar.querySelector('[data-g="play"]').textContent = '▶'; }
-    setVisible(v) { this.visible = v; if (v) this.tick(); else clearTimeout(this.timer); }
+    setVisible(v) { if (v === this.visible) return; this.visible = v; if (v) this.tick(); else clearTimeout(this.timer); }
     destroy() { clearTimeout(this.timer); io && io.unobserve(this.cv); players.delete(this); }
   }
 
@@ -151,7 +151,7 @@
   const io = 'IntersectionObserver' in self ? new IntersectionObserver(entries => entries.forEach(en => {
     const el = en.target;
     if (el.tagName === 'IMG') { if (en.isIntersecting && !el._pmLoading) { el._pmLoading = true; io.unobserve(el); upgrade(el); } }
-    else if (el._pmPlayer) el._pmPlayer.setVisible(en.isIntersecting && document.visibilityState === 'visible');
+    else if (el._pmPlayer) el._pmPlayer.setVisible(en.isIntersecting && onScreen(el));
   }), { rootMargin: '150px' }) : null;
   function scan(root) {
     for (const p of [...players]) if (!p.cv.isConnected) p.destroy();
@@ -160,10 +160,21 @@
       if (io) io.observe(img); else upgrade(img);
     });
   }
-  document.addEventListener('visibilitychange', () => players.forEach(p => {
-    if (document.visibilityState !== 'visible') p.setVisible(false);
-    else { const r = p.cv.getBoundingClientRect(); p.setVisible(r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth); }
-  }));
+  /* Visibilité réelle (tient compte du carrousel qui coupe les slides voisines) */
+  function onScreen(el) {
+    if (document.visibilityState !== 'visible' || !el.isConnected) return false;
+    const r = el.getBoundingClientRect(); if (!r.width) return false;
+    const c = el.closest('.car-track'); const cr = c ? c.getBoundingClientRect() : { left: 0, right: innerWidth };
+    return r.bottom > -150 && r.top < innerHeight + 150 && r.right > Math.max(0, cr.left) + 4 && r.left < Math.min(innerWidth, cr.right) - 4;
+  }
+  /* Filet de sécurité : certains WebViews ne déclenchent pas IntersectionObserver de façon fiable */
+  function sweep() {
+    document.querySelectorAll('img.gif[data-gif-seen]').forEach(img => { if (!img._pmLoading && onScreen(img)) { img._pmLoading = true; io && io.unobserve(img); upgrade(img); } });
+    players.forEach(p => p.cv.isConnected ? p.setVisible(onScreen(p.cv)) : p.destroy());
+  }
+  setInterval(sweep, 1500);
+  document.addEventListener('visibilitychange', sweep);
+  document.addEventListener('scroll', () => { clearTimeout(sweep.t); sweep.t = setTimeout(sweep, 200); }, { capture: true, passive: true });
   new MutationObserver(() => scan()).observe(document.documentElement, { childList: true, subtree: true });
   self.PMGif = { scan, parse, lzw };
 })();
