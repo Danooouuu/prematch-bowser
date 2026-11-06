@@ -566,7 +566,7 @@
     const urls = mediaUrls(set, id); const cache = await caches.open('prematch-media');
     let done = 0, bytes = 0, fail = 0; const prog = $('#dl-prog') || $('[data-dl-prog]');
     const todo = []; for (const u of urls) { if (!(await cache.match(u))) todo.push(u); else done++; }
-    const step = async u => { try { const r = await fetch(u, { mode: 'cors' }); if (!r.ok) throw 0; const b = await r.clone().blob(); bytes += b.size; await cache.put(u, r); } catch (e) { fail++; } done++; if (prog) prog.textContent = `${done} / ${urls.length} images · ${(bytes / MB).toFixed(1)} Mo${fail ? ' · ' + fail + ' échecs' : ''}`; };
+    const step = async u => { try { const r = await fetch(u, { mode: 'cors', cache: 'reload', headers: { Accept: 'image/gif,image/png,image/jpeg' } }); if (!r.ok) throw 0; const b = await r.clone().blob(); bytes += b.size; await cache.put(u, r); } catch (e) { fail++; } done++; if (prog) prog.textContent = `${done} / ${urls.length} images · ${(bytes / MB).toFixed(1)} Mo${fail ? ' · ' + fail + ' échecs' : ''}`; };
     for (let i = 0; i < todo.length; i += 6) await Promise.all(todo.slice(i, i + 6).map(step));
     toast(`Hors-ligne : ${urls.length - fail} / ${urls.length} images prêtes`);
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { });

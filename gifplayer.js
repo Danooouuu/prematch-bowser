@@ -135,12 +135,26 @@
     try { const S = self.PMStore; const c = S && S.MediaCache && await S.MediaCache.url(u); if (c) return c; } catch (e) { }
     return u;
   };
+  /* SmashWiki sert du WebP animé aux navigateurs qui l'acceptent (même URL en .gif, sans en-tête Vary) :
+     on demande explicitement le GIF et, si le cache HTTP renvoie l'ancienne version WebP, on recharge. */
+  const ACCEPT = { Accept: 'image/gif,image/png,image/jpeg' };
+  const isGif = ab => { const b = new Uint8Array(ab, 0, Math.min(3, ab.byteLength)); return b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46; };
+  async function getGif(url) {
+    const src = await resolveUrl(url);
+    let r = await fetch(src, { mode: 'cors', headers: ACCEPT });
+    if (!r.ok) throw new Error(r.status);
+    let ab = await r.arrayBuffer();
+    if (!isGif(ab) && /^https?:/.test(src)) {
+      r = await fetch(src, { mode: 'cors', cache: 'reload', headers: ACCEPT });
+      if (!r.ok) throw new Error(r.status);
+      ab = await r.arrayBuffer();
+    }
+    return ab;
+  }
   async function upgrade(img) {
     const url = img.dataset.gif;
     try {
-      const r = await fetch(await resolveUrl(url), { mode: 'cors' });
-      if (!r.ok) throw new Error(r.status);
-      const gif = parse(await r.arrayBuffer());
+      const gif = parse(await getGif(url));
       if (!img.isConnected) return;
       const p = new Player(img, gif); players.add(p); io.observe(p.cv); p.cv._pmPlayer = p;
     } catch (e) {
@@ -176,5 +190,5 @@
   document.addEventListener('visibilitychange', sweep);
   document.addEventListener('scroll', () => { clearTimeout(sweep.t); sweep.t = setTimeout(sweep, 200); }, { capture: true, passive: true });
   new MutationObserver(() => scan()).observe(document.documentElement, { childList: true, subtree: true });
-  self.PMGif = { scan, parse, lzw };
+  self.PMGif = { scan, parse, lzw, getGif, ACCEPT };
 })();

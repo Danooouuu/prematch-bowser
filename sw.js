@@ -1,6 +1,6 @@
 /* Service worker : coquille de l'app + données en cache-first → ouverture instantanée et hors-ligne.
    Changer VERSION à chaque mise à jour du contenu (tools/build-bundle.mjs le fait automatiquement). */
-const VERSION = 'prematch-2026.11.05-mw4pwp6t';
+const VERSION = 'prematch-2026.11.05-mw4q07cz';
 const SHELL = ['./', 'index.html', 'app.css', 'app.js', 'i18n.js', 'store.js', 'schemas.js', 'combat.js', 'gifplayer.js', 'data/bundle.js', 'data/combat-data.js', 'icons/section-kill.png', 'icons/nav-home.png', 'icons/nav-drills.png', 'icons/nav-flash.png', 'icons/nav-journal.png', 'icons/nav-settings.png', 'icons/nav-bolt.png',
   'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png',
   'icons/section-fiches.png', 'icons/section-drills.png', 'icons/section-revision.png', 'icons/section-journal.png', 'icons/section-framedata.png'];
@@ -18,6 +18,11 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   // Images SmashWiki / miniatures YouTube : servies depuis le cache « prematch-media » si tu les as téléchargées (Réglages → Hors-ligne)
   if (/(^|\.)ssb\.wiki\.gallery$|(^|\.)ytimg\.com$/.test(url.hostname)) {
+    // cache: 'reload' = l'app veut la version réseau (ex. GIF au lieu du WebP) : on remplace la copie hors-ligne
+    if (e.request.cache === 'reload') {
+      e.respondWith(fetch(e.request).then(res => { if (res.ok) caches.open('prematch-media').then(c => c.match(e.request.url).then(had => had && c.put(e.request.url, res.clone()))); return res; }));
+      return;
+    }
     e.respondWith(caches.open('prematch-media').then(c => c.match(e.request.url).then(hit => hit || fetch(e.request))));
     return;
   }
